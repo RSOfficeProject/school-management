@@ -42,7 +42,7 @@
           <?php $file = explode(',', $event->event_poster); ?>
           <div class="">
             @foreach($file as $files)
-            <a class="btn btn-warning" href="{{asset($files)}}" target="_blank">
+            <a class="btn btn-warning" href="{{asset($files)}}" download="">
               <i class="fas fa-file"></i>
             </a>
             @endforeach

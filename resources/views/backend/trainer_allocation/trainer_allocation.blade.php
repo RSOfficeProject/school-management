@@ -109,12 +109,12 @@
                 </div>
                 <div class="card-body">
                   <!-- the events -->
-                  <div id="external-events">
-                    <div class="external-event bg-success">Guest Speaker</div>
-                    <div class="external-event bg-warning">Makers Session</div>
-                    <div class="external-event bg-info">Kid Talk</div>
-                    <div class="external-event bg-primary">Case Study</div>
-                    <div class="external-event bg-danger">Movie Watching</div>
+                  <div id="external-events_new">
+                    <div class="external-event bg-success" data-id="1" check-drop="2">Guest Speaker</div>
+                    <div class="external-event bg-warning" data-id="1" check-drop="2">Makers Session</div>
+                    <div class="external-event bg-info" data-id="1" check-drop="2">Kid Talk</div>
+                    <div class="external-event bg-primary" data-id="1" check-drop="2">Case Study</div>
+                    <div class="external-event bg-danger" data-id="1" check-drop="2">Movie Watching</div>
                     <div class="checkbox">
                       <label for="drop-remove">
                         <input type="checkbox" id="drop-remove">
@@ -192,7 +192,7 @@
    var i;
    var html='';
    $( document ).ready(function() {
-      localStorage.setItem('schoolid',21);
+      localStorage.setItem('schoolid','0');
       $('.select_city').on('change',function(){
         var city_id=$(this).val();
         var mood_id=$('.select_mood').val();
@@ -228,7 +228,7 @@
               var html = '';
               for(i=0; i<data.length; i++)
               {
-                html += '<tr class="bg-info dragable_data trainer_remove" data-id="'+data[i].id+'"><td>'+data[i].trainer_name+'</td></tr>';
+                html += '<tr class="bg-info dragable_data trainer_remove" data-id="'+data[i].id+'" check-drop="1"><td>'+data[i].trainer_name+'</td></tr>';
               }
               $('.data_show').html(html);
           }
@@ -243,16 +243,14 @@
      });
   });
 
-  function get_data()
-  {
-    const school_data=$('.grade_data').val();
-  }
+ 
  
    //Full Calendar section----------------------------------
     document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     //for Trainer draging-----------------
     var draggableEl = document.getElementById('external-events');
+    var draggableE2 = document.getElementById('external-events_new');
 
     new FullCalendar.Draggable(draggableEl, {
     itemSelector: ".dragable_data",
@@ -260,6 +258,16 @@
       // console.log(eventEl);
         return {
             title: eventEl.innerText.trim()
+        }
+    }
+   });
+
+   new FullCalendar.Draggable(draggableE2, {
+    itemSelector: ".external-event",
+    eventData: function(eventE1) {
+        console.log(eventE1);
+        return {
+            title: eventE1.innerText.trim()
         }
     }
    });
@@ -272,6 +280,7 @@
       dayMaxEvents: true, // allow "more" link when too many events
       droppable: true,//for drag drop
       events: function(fetchInfo, successCallback, failureCallback) {
+        //alert(localStorage.schoolid);
         jQuery.ajax({
             type: 'get',
             url: "{{route('backend.schoolinfo.schoolinfo')}}",
@@ -289,13 +298,22 @@
         });
       },
       drop: function(event, draggedEl) {
-        console.log(event);
+        //alert(localStorage.schoolid);
+        if(localStorage.schoolid == '0')
+          {
+            alert('please choose the schhol');
+            return;
+          }
         var month=event.date.getMonth()+1;
-        var event_date=event.date.getFullYear()+'-'+month+'-'+event.date.getDate();
-        var trainer_id=event.draggedEl.attributes[1].value;
+        var event_date=event.dateStr;
+       var check=event.draggedEl.attributes[2].value;
 
-
-        jQuery.ajax({
+        if(event.draggedEl.attributes[2].value == 1)
+        {
+          
+          var trainer_id=event.draggedEl.attributes[1].value;
+        
+          jQuery.ajax({
             type: 'get',
             url: "{{route('backend.schoolinfo.schoolinfo')}}",
             data: {
@@ -308,41 +326,94 @@
                 {
                   html+='<option value="'+new_event[i].title+'">'+new_event[i].title+'</option>';
                 }
-                //console.log(html);
-                //$('#class_schedule_date').val(new_event[0].start);
+              
                 $('#class_schedule').html(html);
                 $('#event_date').val(event_date);
                 $('#trainer_id').val(trainer_id); 
                 $('#calendarModal').modal();
-                //$('#class_schedule').empty();
-                //successCallback(new_event);
+               
             }
         });
-        //$('#calendarModal').modal();
+          
+        }
+        else
+        {
+          //Draggable Events add------------------
+          var event_name=event.draggedEl.innerText;
+          
+            jQuery.ajax({
+              type: 'get',
+              url: "{{route('backend.event_insert.event_insert')}}",
+              data: {
+                school_id: localStorage.schoolid,
+                event_name: event_name,
+                event_date: event_date
+              },
+              success: function(events) {
+                  
+                
+              }
+          });
+        }
+      
+   
       },
-      eventClick:  function(event, jsEvent, view) {
-        //console.log(event);
-            $('#modalTitle').html(event.title);
-            $('#modalBody').html(event.description);
-            $('#eventUrl').attr('href',event.url);
-            $('#calendarModal').modal();
-        },
+  
+      // eventClick:  function(event, jsEvent, view) {
+      //   //console.log(event);
+      //       $('#modalTitle').html(event.title);
+      //       $('#modalBody').html(event.description);
+      //       $('#eventUrl').attr('href',event.url);
+      //       $('#calendarModal').modal();
+      //   },
       //new Draggable(draggableEl);
     });
 
     calendar.render();
-  });
-  $(function(){
-    $('#mybtn').click(function (e){
-      localStorage.setItem('token','1111');
-      calendar.refetchEvents();
-    });
 
-    $('#mybtn2').click(function (e){
-      localStorage.setItem('token','2222');
-      calendar.refetchEvents();
-    });
+    //Add event to a dragable-----------------
+      /* ADDING EVENTS */
+      var currColor = '#3c8dbc' //Red by default
+    // Color chooser button
+    $('#color-chooser > li > a').click(function (e) {
+      e.preventDefault()
+      // Save color
+      currColor = $(this).css('color');
+      // Add color effect to button
+      $('#add-new-event').css({
+        'background-color': currColor,
+        'border-color'    : currColor
+      })
+    })
+
+    $('#add-new-event').click(function (e) {;
+      e.preventDefault()
+      // Get value and make sure it is not null
+      var val = $('#new-event').val();
+      if (val.length == 0) {
+        return
+      }
+
+      // Create events
+      var event = $('<div/>')
+      event.css({
+        'background-color': currColor,
+        'border-color'    : currColor,
+        'color'           : '#fff'
+      }).addClass('external-event').attr({"data-id": 1,"check-drop": 2});
+      event.text(val)
+      //alert(event);
+      $('#external-events_new').prepend(event)
+
+      // Add draggable funtionality
+      //ini_events(event)
+
+      // Remove event from text input
+      $('#new-event').val('')
+    })
+
   });
+
 
 
   //Trainer assign-------------------------
@@ -360,8 +431,8 @@
         data: custom_data+"&school_id="+localStorage.schoolid,
         dataType: 'JSON',
         success: function(data) {
-             //it's for trainer remove if trainer get more tan 4 class to a school
-                if(data.success)
+             //it's for trainer remove if trainer get more tan 4 ot 16 hour class to a school  in a day or a week
+                if(data.success == 4)
                 {
                   $( ".trainer_remove" ).each(function() {
                       var id=$(this).attr('data-id');
@@ -372,6 +443,17 @@
                     });  
                 }
 
+                if(data.today_tainer_hour == 4)
+                {
+                  alert('This trainer already assign for 4hour class in a day and 16 hour in a week')
+                  $( ".trainer_remove" ).each(function() {
+                      var id=$(this).attr('data-id');
+                      if(data.trainer_id == id)
+                      {
+                        $(this).remove(); 
+                      }
+                    });  
+                }
 
                 $('#class_schedule').empty();
                 $('#calendarModal').modal('hide');
