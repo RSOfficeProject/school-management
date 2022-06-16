@@ -1,6 +1,5 @@
 <?php
     return [
-
         //Add and Edit Event 
         'event_add'=>'Add Event',
         'home'=>'Home',
@@ -19,7 +18,7 @@
         'event_fee'=>'Fee',
 
 
-        //List Content
+        //List event
         'event_list'=>'Event List',
         'home'=>'Home',
         'add_event'=>'+ Add Event',
@@ -32,13 +31,11 @@
         'description'=>'Description',
         'action'=>'Action',
         
-
-        //view content
+        //view event
         'home'=>'Home',
+        'view_event'=>'View All Event',
 
-
-        //others content
+        //others event
         'edit_event'=>'Edit Content',
-
     ];
 ?>

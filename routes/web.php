@@ -59,8 +59,6 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.',
     Route::post('eventupdate',['as' => "eventupdate.eventupdate", 'uses'=>"EventController@eventupdate"]);
     Route::get('eventdelete/{id}',['as' => "eventdelete.eventdelete", 'uses'=>"EventController@eventdelete"]);
 
-    
-      
     // Trainer Onboarding
     Route::get("addtrainer", ['as' => "addtrainer.addTrainer", 'uses' => "TrainerController@addTrainer"]);
     Route::post("storetrainer", ['as' => "storetrainer.storeTrainer", 'uses' => "TrainerController@storeTrainer"]);
@@ -210,12 +208,21 @@ Route::group(['namespace' => 'School', 'prefix' => 'school', 'as' => 'school.', 
      * Backend Dashboard
      * Namespaces indicate folder structure.
      */
-    // School Routes is start here
+    // School Dashboard
     Route::get('dashboard', 'ManageschoolController@index')->name('dashboard');
 
-    Route::post("/profile/update/", [
-        'uses' => "ManageschoolController@updateSchool",
-        'as' => "update-school"
-    ]);
+    // School Profile
+    Route::get("/profile/edit/", ['uses' => "ManageschoolController@profileEdit", 'as' => "profile-edit"]);
+    Route::post("/profile/update/", ['uses' => "ManageschoolController@updateSchool", 'as' => "update-school"]);
+    
+    // School Event
+    Route::get('/event/list/',['uses'=>"ManageschoolController@eventList", 'as' => "event-list"]);
+    Route::get('/event/view/{id}',['uses'=>"ManageschoolController@eventView",'as' => "event-view"]);
+    
+    // School Privacy
+    Route::get('/privacy/police/',['uses'=>"ManageschoolController@privacyPolice", 'as' => "privacy-police"]);
+    
+    // Student Progress Report
+    Route::get('/progress/report/',['uses'=>"ProgressreportController@progressReport", 'as' => "progress-report"]);
 
 });
