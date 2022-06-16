@@ -15,19 +15,23 @@ use App\Models\Userprofile;
 use App\Models\EmailInfo;
 use App\Models\Students;
 use App\Models\EmailNotification;
+use App\Models\Event;
 
 class ManageschoolController extends Controller
 {
     public function index()
     {
-
+        return view('school.index');
+    }
+    public function profileEdit()
+    {
         $userId = Session::get('user_id');
         $schoolId = School::where('user_id', $userId)->first();
         $school = School::find($schoolId['id']);
         $grade = Grade::all();
         // echo '<pre>'; print_r($schoolLists); die();
 
-        return view('school.index', [
+        return view('school.profile.edit_profile', [
             'school' => $school,
             'grade' => $grade,
         ]);
@@ -78,11 +82,11 @@ class ManageschoolController extends Controller
 
         //incharge email--------------------
         $school_row = School::where('incharge_email', $req->incharge_email)->first();
-        
-        
-    //        echo '<pre>';
-    //    print_r($school_row);
-    //    die(); 
+
+
+        //        echo '<pre>';
+        //    print_r($school_row);
+        //    die(); 
 
         if (!empty($school_row)) {
             if ($school_row['incharge_email'] == $req->incharge_email && $school_row['id'] == $req->school_id) {
@@ -203,7 +207,7 @@ class ManageschoolController extends Controller
         $data['weekly_class_for_grade'] = json_encode($weekly_class);
 
         // echo "<pre>"; print_r($data); die();
-        
+
         $success = School::where("id", $schhol_id)->update($data);
 
         // echo "<pre>"; print_r($success); die();
@@ -234,7 +238,25 @@ class ManageschoolController extends Controller
             //     'message' => 'School successfully Updated!',
             //     'success' => 'success',
             // );
-            return redirect('/school/dashboard')->with('message', 'School successfully Updated!');
+            return redirect('/school/profile/edit')->with('message', 'School successfully Updated!');
         }
+    }
+
+    public function eventList(){
+        $event = Event::all();
+        return view('school.event.event_list', [
+            'event' => $event
+        ]);
+    }
+
+    public function eventView($id){
+        $event = Event::find($id);
+        return view('school.event.view_event', [
+            'event' => $event
+        ]);
+    }
+
+    public function privacyPolice(){
+        return view('school.terms.privacy_police');
     }
 }

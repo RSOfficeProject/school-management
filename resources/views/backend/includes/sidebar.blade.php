@@ -243,8 +243,16 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="dashboard.php" class="nav-link active">
+            <a href="{{ route('school.dashboard') }}" class="nav-link active">
               <i class="nav-icon ion ion-stats-bars"></i>
+              <p>
+                Dashboard
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('school.profile-edit') }}" class="nav-link">
+              <i class="nav-icon ion ion-person-stalker"></i>
               <p>
                 Profile
               </p>
@@ -259,13 +267,13 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="student_progress_report.php" class="nav-link">
+            <a href="{{ route('school.progress-report') }}" class="nav-link">
               <i class="fas fa-chart-line nav-icon"></i>
               <p>Student Progress Report</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="eventsllist.php" class="nav-link">
+            <a href="{{ route('school.event-list') }}" class="nav-link">
               <i class="nav-icon fas fa-calendar-alt"></i>
               <p>
                 Events
@@ -273,7 +281,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="termsofuseprivacypolicy.php" class="nav-link">
+            <a href="{{ route('school.privacy-police') }}" class="nav-link">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>
                 Terms & Privacy Policy
