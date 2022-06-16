@@ -1,0 +1,5 @@
+1.alert,breadcumb,infinite scroll,action sheet,search bar,segment,
+2.http service/promise
+3.routing
+4.ionic navigation
+5.ionic storage

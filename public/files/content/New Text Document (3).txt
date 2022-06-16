@@ -1,0 +1,11 @@
+getSelectedCalenderValues(c_id: any) {
+    
+    this.selectedCalenderValues = [];
+    alert(c_id);
+    this.calenderArray.controls.forEach((control, i) => {
+      if (control.value) {
+        this.selectedCalenderValues.push(this.allcalenderslist[i].id);
+      }
+    });
+     alert(this.selectedCalenderValues);
+  }

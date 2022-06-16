@@ -1,0 +1,25 @@
+//$api = new \Binance\API();
+        
+       
+         //$api = new \Binance\API( "somefile.json" );
+        // // 3. config by specifying api key and secret
+        //$api = new \Binance\API("<api key>","<secret>");
+        // // 4. config by specifying api key, api secret and testnet flag. By default the testnet is disabled
+        $api = new \Binance\API("28c626b3515a99a756c053025033a417b14247fa1ca4b7f581a613661fe587ad","9140589cc928e81dbc496ba7431c92346525458815294977b3f8fc917f3fc860", true);
+        // // 5. Rate Limiting Support
+        // $api = new Binance\RateLimiter(new Binance\API());
+        
+        $ticker = $api->prices();
+        
+
+        $price = $api->price("BNBBTC");
+        //echo "Price of BNB: {$price} BTC.".PHP_EOL;die();
+
+        $ticks = $api->candlesticks("BNBBTC", "5m");
+        //echo "<pre>";print_r($ticks);
+       // echo "<pre>";print_r($api);die();
+        $api->miniTicker(function($api, $ticker) {
+            print_r($ticker);
+        });
+
+                return view('test.php');

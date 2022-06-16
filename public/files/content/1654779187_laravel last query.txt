@@ -1,0 +1,4 @@
+DB::enableQueryLog();
+        $trainers = Trainer::with(['school'])->get();
+        
+        dd(DB::getQueryLog());
