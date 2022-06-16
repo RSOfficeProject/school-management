@@ -73,6 +73,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.',
      Route::get('alltainer',['as' => "alltainer.alltainer", 'uses'=>"TrainerAllocationController@alltainer"]);
      Route::get('schoolinfo',['as' => "schoolinfo.schoolinfo", 'uses'=>"TrainerAllocationController@schoolinfo"]);
      Route::post('assigntrainer',['as' => "assigntrainer.assigntrainer", 'uses'=>"TrainerAllocationController@assigntrainer"]);
+     Route::get('event_insert',['as' => "event_insert.event_insert", 'uses'=>"TrainerAllocationController@event_insert"]);
 
     // Student Communication
     Route::get("/assignment/create/", [

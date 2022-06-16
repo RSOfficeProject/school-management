@@ -43,8 +43,8 @@
                      $grade_decode=json_decode($school->number_of_student,true);
                       
                     ?>
-                    <input type="text" value="{{$school->user_id}}" name="user_id">
-                    <input type="text" value="{{$school->id}}" name="school_id">
+                    <input type="hidden" value="{{$school->user_id}}" name="user_id">
+                    <input type="hidden" value="{{$school->id}}" name="school_id">
                     <input type="hidden" value="{{$school->email}}" name="school_email">
                     <input type="hidden" value="{{$school->school_logo}}" name="old_school_logo">
                     <input type="hidden" value="{{$school->upload_excel}}" name="old_cover_image">
@@ -168,7 +168,7 @@
 
                         <div class="form-group">
                            <label>Upload Excel </label>
-                           <input type="file" name="upload_csv">
+                           <input type="file" class="form-control" name="upload_csv">
                            <p><a href="{{asset('csv/template/student-information-template.csv')}}" class="text-danger">DOWNLOAD EXCEL FOR FORMAT</a></p>
                         </div>
                         

@@ -211,29 +211,29 @@ class TrainerController extends Controller
         $user_profile->name = $request->trainer_name;
         $user_profile->save();
 
-        $request_image = $request->file('image');
+        // $request_image = $request->file('image');
         
-        if(!empty($request_image)){
+        // if(!empty($request_image)){
 
-        $image = Image::make($request_image);
-        $image_path = public_path('/image/trainer/');
-        $img_name = time().'.'.$request_image->getClientOriginalExtension();
-        $image->save($image_path.$img_name);
+        // $image = Image::make($request_image);
+        // $image_path = public_path('/image/trainer/');
+        // $img_name = time().'.'.$request_image->getClientOriginalExtension();
+        // $image->save($image_path.$img_name);
 
-        $image_name = $image_path."thumbnail/".$img_name;
-        $image->resize(null, 200, function($constraint) {
-            $constraint->aspectRatio();
-        });
+        // $image_name = $image_path."thumbnail/".$img_name;
+        // $image->resize(null, 200, function($constraint) {
+        //     $constraint->aspectRatio();
+        // });
          
-        $image->save($image_name);
-        }else{
-            if(empty($request->pre_image)){
-                $image_name = $request->pre_image;
-            }
-            // else{
-            //     $image_name = 'C:\xampp\htdocs\school_management\public\/image/default_image.png';
-            // }
-        }
+        // $image->save($image_name);
+        // }else{
+        //     if(empty($request->pre_image)){
+        //         $image_name = $request->pre_image;
+        //     }
+        //     // else{
+        //     //     $image_name = 'C:\xampp\htdocs\school_management\public\/image/default_image.png';
+        //     // }
+        // }
         
         $trainer= trainer:: find($request->id);
         $trainer->trainer_name = $request->trainer_name;
@@ -243,7 +243,7 @@ class TrainerController extends Controller
         $trainer->city= $request->city;
         $trainer->join_date = $request->join_date;
         $trainer->date_of_birth= $request->date_of_birth;
-        $trainer->image = $image_name;
+        $trainer->image = 'abc.jpg';
         $trainer->mode= $request->mode;
         $trainer->type = $request->type;
         $trainer->status = $request->status;

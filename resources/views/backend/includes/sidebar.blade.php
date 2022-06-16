@@ -234,7 +234,7 @@
           <img src="{{asset('asset/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Ideal School and Collage</a>
+          <a href="#" class="d-block text-wrap"><?= Session::get('school_name'); ?></a>
         </div>
       </div>
       <!-- Sidebar Menu -->
@@ -257,6 +257,29 @@
                 Profile
               </p>
             </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link"> 
+              <i class="nav-icon fas fa-user-graduate"></i>
+              <p>
+                Students
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview"> 
+              <li class="nav-item">
+                <a href="students.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Students List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="attendance.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Attendance </p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <a href="classschedule.php" class="nav-link">

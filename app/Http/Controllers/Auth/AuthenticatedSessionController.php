@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 
+use App\Models\School;
+use App\Models\Students;
+use App\Models\Trainer;
+
 class AuthenticatedSessionController extends Controller
 {
-
-
-
-
 
     /**
      * Display the login view.
@@ -46,9 +46,7 @@ class AuthenticatedSessionController extends Controller
 
 
         $get_user = User::where('email', $request->email)->first()->toArray();
-
         // echo "<pre>"; print_r($get_user); die();
-
 
         if (!empty($get_user)) {
 
@@ -60,6 +58,14 @@ class AuthenticatedSessionController extends Controller
                 Session::put('last_name', $get_user['last_name']);
                 Session::put('user_group', $get_user['group']);
 
+                $school = School::where('user_id', $get_user['id'])->first()->toArray();
+                Session::put('school_name', $school['school_name']);
+
+                // $trainer = Trainer::where('user_id', $get_user['id'])->first()->toArray();
+                // Session::put('trainer_name', $trainer['trainer_name']);
+                
+                // echo "<pre>"; print_r($school); die();
+                // $get_user['id']
                 if($get_user['group'] == 1){
 
                     if ($redirectTo) {
@@ -83,7 +89,6 @@ class AuthenticatedSessionController extends Controller
                 }else{
                     echo "Student"; die();
                 }
-
 
             }
 
