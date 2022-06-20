@@ -79,7 +79,7 @@ class AuthenticatedSessionController extends Controller
 
                     // echo "School"; die();
                 }else if($get_user['group'] == 3){
-                    echo "Trainer"; die();
+                    return redirect('trainer/dashboard');
                 }else{
                     echo "Student"; die();
                 }
