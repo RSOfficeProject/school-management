@@ -273,6 +273,11 @@
    });
 
     calendar = new FullCalendar.Calendar(calendarEl, {
+       headerToolbar: {
+        left  : 'prev,next today',
+        center: 'title',
+        right : 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
       initialDate: '2022-06-02',
       editable: true,
       selectable: true,

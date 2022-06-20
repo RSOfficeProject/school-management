@@ -17,11 +17,23 @@ use App\Models\Students;
 use App\Models\EmailNotification;
 use App\Models\Event;
 
+use Carbon\Carbon;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Hash;
+
+use DB;
+
 class ManageschoolController extends Controller
 {
     public function index()
     {
-        return view('school.index');
+       $userId = Session::get('user_id');
+       $school = School::with('user')->where('user_id', $userId)->first();
+    //    echo '<pre>'; print_r($school); die();
+
+        return view('school.index', [
+            'school' => $school,
+        ]);
     }
     public function profileEdit()
     {
@@ -157,24 +169,40 @@ class ManageschoolController extends Controller
             $i = 1;
             while ($row = fgetcsv($handle)) {
                 if ($i != 1) {
+
+                    $data_array = $req->except('_token', 'roles', 'permissions', 'password_confirmation');
+                    $data_array['name'] = $row[0];
+                    $data_array['email'] = $row[9];
+                    $data_array['mobile'] = $row[10];
+                    $data_array['gender'] = $row[15];
+                    $data_array['date_of_brith'] = $row[13];
+
+                    $data_array['group'] = 4;
+                    $data_array['password'] = Hash::make("student");
+            
+                    if ($req->confirmed == 1) {
+                        $data_array = Arr::add($data_array, 'email_verified_at', Carbon::now());
+                    } else {
+                        $data_array = Arr::add($data_array, 'email_verified_at', null);
+                    }
+
+                    User::create($data_array);
+                    $userId = DB::getPdo()->lastInsertId();
+
                     $students = new Students();
+                    $students->user_id = $userId;
                     $students->school_id = $schhol_id;
-                    $students->name = $row[0];
-                    $students->school_name = $row[1];
-                    $students->project = $row[2];
-                    $students->assignment = $row[3];
-                    $students->classes_held = $row[4];
-                    $students->classes_attended = $row[5];
-                    $students->attendance = $row[6];
-                    $students->overal_grade = $row[7];
-                    $students->father_name = $row[8];
-                    $students->mother_name = $row[9];
-                    $students->email = $row[10];
-                    $students->phone = $row[11];
-                    $students->address = $row[12];
-                    $students->blood_group = $row[13];
-                    $students->date_of_brith = $row[14];
-                    $students->activity_incharge = $row[15];
+                    $students->project = $row[1];
+                    $students->assignment = $row[2];
+                    $students->classes_held = $row[3];
+                    $students->classes_attended = $row[4];
+                    $students->attendance = $row[5];
+                    $students->overal_grade = $row[6];
+                    $students->father_name = $row[7];
+                    $students->mother_name = $row[8];
+                    $students->address = $row[11];
+                    $students->blood_group = $row[12];
+                    $students->activity_incharge = $row[14];
                     $students->save();
                 }
                 $i++;

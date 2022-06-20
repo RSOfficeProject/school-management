@@ -65,6 +65,12 @@
                           <input type="hidden" value="{{$content['video']}}" name="pre_video">
                           <input type="file" class="form-control" id="eventimage" placeholder="" name="video">
                         </div>
+
+                        <div class="form-group">
+                          <label for="Worksheets">{{ __('admin/content.worksheets') }}</label>
+                          <input type="hidden" value="{{$content['worksheet']}}" name="pre_worksheet">
+                          <input type="file" class="form-control" id="Worksheets" placeholder="" name="worksheets">
+                        </div>
                         
 
                     </div>
@@ -81,18 +87,13 @@
                     
                     <div class="card-body">
                         <div class="form-group">
-                              <label for="Worksheets">{{ __('admin/content.worksheets') }}</label>
-                              <input type="hidden" value="{{$content['worksheet']}}" name="pre_worksheet">
-                              <input type="file" class="form-control" id="Worksheets" placeholder="" name="worksheets">
-                        </div>
-                        <div class="form-group">
                           <label for="eventstart">{{ __('admin/content.description') }}</label>
                           <textarea id="contentdescription" class="form-control" name="description">{{$content['description']}}</textarea>
                         </div> 
                     </div>
 
                     <div class="card-footer">
-                      <button type="submit" class="btn btn-primary">{{ __('admin/content.submit') }}</button>
+                      <button type="submit" class="btn btn-primary mt-4">{{ __('admin/content.submit') }}</button>
                     </div> 
               </div> 
            </div> 

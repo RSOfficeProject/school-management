@@ -6,8 +6,8 @@
         'trainer_name'=>'Trainer Name',
         'email_id'=>'Email ID',
         'trainer_fee'=>'Trainer Fee (per hour)',
-        'currency_inr'=>'INR/$',
-        'currency_doller'=>'Doller/$',
+        'currency_inr'=>'INR',
+        'currency_doller'=>'SGD',
         'contact_no'=>'Contact Number',
         'submit'=>'Submit',
 
@@ -21,6 +21,8 @@
         'activity_emailId'=>'Activity In charge Email ID',
         'contact_no'=>'Contact Number',
         'date_of_birth'=>'Date Of Birth',
+        'official_emailId'=>'Official Email Id (principle)',
+
 
         'identity_proof'=>'Upload Identify Proof',
         'proof_file'=>'Choose file',

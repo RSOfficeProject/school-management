@@ -63,7 +63,7 @@
                       <td>{{$trainer['trainer_name']}}</td>
                       <td>{{$trainer['city']}}</td>
                       <td>---</td>
-                      <td>{{$trainer['hour']}} Hour</td>
+                      <td>{{$trainer['hour']}}</td>
                       <td>{{$trainer['trainer_fee']}}</td>
                       <td>
                         @if($trainer['status']==1)
@@ -71,7 +71,6 @@
                         @elseif($trainer['status']==2)
                         <small class="badge badge-success">Deactive</small>
                         @endif
-
                       </td>
                       <td>
                         <?php $delete_ids= $trainer['id'].'|'.$trainer['user_id']?>
@@ -80,7 +79,6 @@
                       </td>
                     </tr>
                     @endforeach
-                    
                   </tbody>
                  </table>
               </div>

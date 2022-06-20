@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Autho Routes
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // Language Switch
 Route::get('language/{language}', 'LanguageController@switch')->name('language.switch');
@@ -41,23 +41,23 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.',
     Route::get('dashboard', 'BackendController@index')->name('dashboard');
 
     // School Onboarding
-    Route::get('schoolcreate',['as' => "schoolcreate.schoolCreate", 'uses'=>"SchoolController@schoolCreate"]);
-    Route::post('schoolstore',['as' => "schoolstore.schoolStore", 'uses' => "SchoolController@schoolStore"]);
-    Route::get('schoollist',['as' => "schoollist.schoolList", 'uses' => "SchoolController@schoolList"]);
-    Route::get('schooledit/{id}',['as' => "schooledit.schoolEdit", 'uses' => "SchoolController@schoolEdit"]);
-    Route::post('schoolupdate',['as' => "schoolupdate.schoolUpdate", 'uses' => "SchoolController@schoolUpdate"]);
-    Route::get('schooldelete/{id}',['as' => "schooldelete.schoolDelete", 'uses' => "SchoolController@schoolDelete"]);
-    Route::get('viewschool/{id}',['as' => "viewschool.viewschool", 'uses' => "SchoolController@viewschool"]);
-    Route::get('schoolnotification',['as' => "schoolnotification.schoolnotification", 'uses'=>"SchoolController@schoolnotification"]);
+    Route::get('schoolcreate', ['as' => "schoolcreate.schoolCreate", 'uses' => "SchoolController@schoolCreate"]);
+    Route::post('schoolstore', ['as' => "schoolstore.schoolStore", 'uses' => "SchoolController@schoolStore"]);
+    Route::get('schoollist', ['as' => "schoollist.schoolList", 'uses' => "SchoolController@schoolList"]);
+    Route::get('schooledit/{id}', ['as' => "schooledit.schoolEdit", 'uses' => "SchoolController@schoolEdit"]);
+    Route::post('schoolupdate', ['as' => "schoolupdate.schoolUpdate", 'uses' => "SchoolController@schoolUpdate"]);
+    Route::get('schooldelete/{id}', ['as' => "schooldelete.schoolDelete", 'uses' => "SchoolController@schoolDelete"]);
+    Route::get('viewschool/{id}', ['as' => "viewschool.viewschool", 'uses' => "SchoolController@viewschool"]);
+    Route::get('schoolnotification', ['as' => "schoolnotification.schoolnotification", 'uses' => "SchoolController@schoolnotification"]);
 
     //event section---------------------
-    Route::get('createevent',['as' => "createevent.createevent", 'uses'=>"EventController@createevent"]);
-    Route::post('eventstore',['as' => "eventstore.eventstore", 'uses'=>"EventController@eventstore"]);
-    Route::get('eventlist',['as' => "eventlist.eventlist", 'uses'=>"EventController@eventlist"]);
-    Route::get('viewevent/{id}',['as' => "viewevent.viewevent", 'uses'=>"EventController@viewevent"]);
-    Route::get('editevent/{id}',['as' => "editevent.editevent", 'uses'=>"EventController@editevent"]);
-    Route::post('eventupdate',['as' => "eventupdate.eventupdate", 'uses'=>"EventController@eventupdate"]);
-    Route::get('eventdelete/{id}',['as' => "eventdelete.eventdelete", 'uses'=>"EventController@eventdelete"]);
+    Route::get('createevent', ['as' => "createevent.createevent", 'uses' => "EventController@createevent"]);
+    Route::post('eventstore', ['as' => "eventstore.eventstore", 'uses' => "EventController@eventstore"]);
+    Route::get('eventlist', ['as' => "eventlist.eventlist", 'uses' => "EventController@eventlist"]);
+    Route::get('viewevent/{id}', ['as' => "viewevent.viewevent", 'uses' => "EventController@viewevent"]);
+    Route::get('editevent/{id}', ['as' => "editevent.editevent", 'uses' => "EventController@editevent"]);
+    Route::post('eventupdate', ['as' => "eventupdate.eventupdate", 'uses' => "EventController@eventupdate"]);
+    Route::get('eventdelete/{id}', ['as' => "eventdelete.eventdelete", 'uses' => "EventController@eventdelete"]);
 
     // Trainer Onboarding
     Route::get("addtrainer", ['as' => "addtrainer.addTrainer", 'uses' => "TrainerController@addTrainer"]);
@@ -66,14 +66,18 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.',
     Route::get("traineredit/{id}", ['as' => "traineredit.trainerEdit", 'uses' => "TrainerController@trainerEdit"]);
     Route::post("traineredit", ['as' => "updatetrainer.updateTrainer", 'uses' => "TrainerController@updateTrainer"]);
     Route::get("trainerdelete/{id}", ['as' => "trainerdelete.trainerDelete", 'uses' => "TrainerController@trainerDelete"]);
-    Route::get('trainernotification',['as' => "trainernotification.trainerNotification", 'uses'=>"TrainerController@trainerNotification"]);
+    Route::get('trainernotification', ['as' => "trainernotification.trainerNotification", 'uses' => "TrainerController@trainerNotification"]);
 
-     //Trainer Allocation------------------
-     Route::get('trainerallocation',['as' => "trainerallocation.trainerallocation", 'uses'=>"TrainerAllocationController@trainerallocation"]);
-     Route::get('alltainer',['as' => "alltainer.alltainer", 'uses'=>"TrainerAllocationController@alltainer"]);
-     Route::get('schoolinfo',['as' => "schoolinfo.schoolinfo", 'uses'=>"TrainerAllocationController@schoolinfo"]);
-     Route::post('assigntrainer',['as' => "assigntrainer.assigntrainer", 'uses'=>"TrainerAllocationController@assigntrainer"]);
-     Route::get('event_insert',['as' => "event_insert.event_insert", 'uses'=>"TrainerAllocationController@event_insert"]);
+    //new
+    Route::post('trainer/checkinfo/', ['as' => "trainer-checkinfo", 'uses' => "TrainerController@trainerCheckInfo"]);
+
+
+    //Trainer Allocation------------------
+    Route::get('trainerallocation', ['as' => "trainerallocation.trainerallocation", 'uses' => "TrainerAllocationController@trainerallocation"]);
+    Route::get('alltainer', ['as' => "alltainer.alltainer", 'uses' => "TrainerAllocationController@alltainer"]);
+    Route::get('schoolinfo', ['as' => "schoolinfo.schoolinfo", 'uses' => "TrainerAllocationController@schoolinfo"]);
+    Route::post('assigntrainer', ['as' => "assigntrainer.assigntrainer", 'uses' => "TrainerAllocationController@assigntrainer"]);
+    Route::get('event_insert', ['as' => "event_insert.event_insert", 'uses' => "TrainerAllocationController@event_insert"]);
 
     // Student Communication
     Route::get("/assignment/create/", [
@@ -97,16 +101,15 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.',
     // ]);
 
 
-
     // Content
     Route::get("addcontent", ['as' => "addcontent.addContent", 'uses' => "ContentController@addContent"]);
     Route::post("storecontent", ['as' => "storecontent.storeContent", 'uses' => "ContentController@storeContent"]);
-    Route::get("contentlist",['as' => "contentlist.contentList", 'uses' => "ContentController@contentList"]);
-    Route::get("contentedit/{id}",['as' => "contentedit.contentEdit", 'uses' => "ContentController@contentEdit"]);
-    Route::post("contentupdate",['as' => "updatecontent.updateContent", 'uses' => "ContentController@updateContent"]);
-    Route::get("contentdelete/{id}",['as' => "contentdelete.contentDelete", 'uses' => "ContentController@contentDelete"]);
-    Route::get("contentview/{id}",['as' => "contentview.contentView", 'uses' => "ContentController@contentView"]);
-    
+    Route::get("contentlist", ['as' => "contentlist.contentList", 'uses' => "ContentController@contentList"]);
+    Route::get("contentedit/{id}", ['as' => "contentedit.contentEdit", 'uses' => "ContentController@contentEdit"]);
+    Route::post("contentupdate", ['as' => "updatecontent.updateContent", 'uses' => "ContentController@updateContent"]);
+    Route::get("contentdelete/{id}", ['as' => "contentdelete.contentDelete", 'uses' => "ContentController@contentDelete"]);
+    Route::get("contentview/{id}", ['as' => "contentview.contentView", 'uses' => "ContentController@contentView"]);
+
     Route::post("addstream", ['as' => "addstream.addStream", 'uses' => "ContentController@addStream"]);
     Route::post("addagegroup", ['as' => "addagegroup.addAgeGroup", 'uses' => "ContentController@addAgeGroup"]);
 
@@ -159,6 +162,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.',
     *
     * ---------------------------------------------------------------------
     */
+    
     $module_name = 'backups';
     $controller_name = 'BackupController';
     Route::get("$module_name", ['as' => "$module_name.index", 'uses' => "$controller_name@index"]);
@@ -200,7 +204,6 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.',
     Route::resource("$module_name", "$controller_name");
     Route::patch("$module_name/{id}/block", ['as' => "$module_name.block", 'uses' => "$controller_name@block", 'middleware' => ['permission:block_users']]);
     Route::patch("$module_name/{id}/unblock", ['as' => "$module_name.unblock", 'uses' => "$controller_name@unblock", 'middleware' => ['permission:block_users']]);
-
 });
 
 Route::group(['namespace' => 'School', 'prefix' => 'school', 'as' => 'school.', 'middleware' => ['auth', 'can:view_backend']], function () {
@@ -215,15 +218,45 @@ Route::group(['namespace' => 'School', 'prefix' => 'school', 'as' => 'school.', 
     // School Profile
     Route::get("/profile/edit/", ['uses' => "ManageschoolController@profileEdit", 'as' => "profile-edit"]);
     Route::post("/profile/update/", ['uses' => "ManageschoolController@updateSchool", 'as' => "update-school"]);
-    
+
     // School Event
-    Route::get('/event/list/',['uses'=>"ManageschoolController@eventList", 'as' => "event-list"]);
-    Route::get('/event/view/{id}',['uses'=>"ManageschoolController@eventView",'as' => "event-view"]);
-    
+    Route::get('/event/list/', ['uses' => "ManageschoolController@eventList", 'as' => "event-list"]);
+    Route::get('/event/view/{id}', ['uses' => "ManageschoolController@eventView", 'as' => "event-view"]);
+
     // School Privacy
-    Route::get('/privacy/police/',['uses'=>"ManageschoolController@privacyPolice", 'as' => "privacy-police"]);
-    
+    Route::get('/privacy/police/', ['uses' => "ManageschoolController@privacyPolice", 'as' => "privacy-police"]);
+
     // Student Progress Report
-    Route::get('/progress/report/',['uses'=>"ProgressreportController@progressReport", 'as' => "progress-report"]);
+    Route::get('/progress/report/', ['uses' => "ProgressreportController@progressReport", 'as' => "progress-report"]);
+
+    // Student List
+    Route::get('/student/list/', ['uses' => "SchoolController@studentList", 'as' => "student-list"]);
+    Route::get('/student/edit/{id}', ['uses' => "SchoolController@studentEdit", 'as' => "student-edit"]);
+    Route::post('/student/update/{id}', ['uses' => "SchoolController@studentUpdate", 'as' => "school-update"]);
+
+    //School Class Schedule-------------- 
+    Route::get('/class/schedule',['uses'=>"ClassScheduleController@class_schedule", 'as' => "class_schedule"]);
+    Route::get('/school/class/schedule',['uses'=>"ClassScheduleController@school_classSchedule", 'as' => "school_classSchedule"]);
+
+
+});
+
+// =====================  Trainer Section =================
+
+Route::group(['namespace' => 'Trainer', 'prefix' => 'trainer', 'as' => 'trainer.', 'middleware' => ['auth', 'can:view_backend']], function () {
+
+    // Dashboard
+    Route::get('dashboard', 'DashboardController@index')->name('dashboard');
+
+    // Content
+    Route::get('content/view', ['as' => "content/view.contentView", 'uses' => "DashboardController@contentView"]);
+
+    // Content
+    Route::get('content/list', ['as' => "content/list.contentList", 'uses' => "ContentController@content_list"]);
+    Route::get('content/view/{id}', ['as' => "content/view.contentView", 'uses' => "ContentController@contentView"]);
+
+    //Event----------------------
+    Route::get('event/list', ['as' => "event/list.eventList", 'uses' => "EventController@event_list"]);
+    Route::get('event/view/{id}', ['as' => "event/view.eventView", 'uses' => "EventController@eventView"]);
 
 });

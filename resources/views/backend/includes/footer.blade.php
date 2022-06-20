@@ -1,17 +1,17 @@
 <!-- /.content-wrapper -->
-  <footer class="main-footer">
-      <strong>Copyright &copy; 2022 <a href="#">kidspreneurship</a>.</strong>
-      All rights reserved.
-      <div class="float-right d-none d-sm-inline-block">
-         <b>Version</b> 1.0
-      </div>
-   </footer>
+<footer class="main-footer">
+  <strong>Copyright &copy; 2022 <a href="#">kidspreneurship</a>.</strong>
+  All rights reserved.
+  <div class="float-right d-none d-sm-inline-block">
+    <b>Version</b> 1.0
+  </div>
+</footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
@@ -28,37 +28,42 @@
 <script src="{{asset('asset/dist/js/jquery.metalClone.min.js')}}"></script>
 <script src="{{asset('asset/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script src="{{asset('asset/dist/js/intlTelInput-jquery.min.js')}}"></script>
-<script> 
-   jQuery(function(){
-      $('.form-group').multifield({
+<script>
+  jQuery(function() {
+
+    $('#example1').DataTable();
+    $('#example2').DataTable();
+
+    $('.form-group').multifield({
       section: '.toClone_example1',
-      btnAdd:'.addBtn',
-      btnRemove:'.btnRemove'
+      btnAdd: '.addBtn',
+      btnRemove: '.btnRemove'
     });
- if($("#phone").attr('id')){
-   $("#phone").intlTelInput({ 
-        autoPlaceholder:"polite",
-        customPlaceholder:null,
+
+    if ($("#phone").attr('id')) {
+      $("#phone").intlTelInput({
+        autoPlaceholder: "polite",
+        customPlaceholder: null,
         formatOnDisplay: true,
         utilsScript: "../dist/js/utils.js",
 
-    });
-   }
-    
-  $('.section_add').multifield({
-    section: '.row_check',
-    btnAdd:'.addBtn',
-    btnRemove:'.removeBtn'
-  });
+      });
+    }
 
-  $('.section_add_more').multifield({
-    section: '.row_check_new',
-    btnAdd:'.addBtn1',
-    btnRemove:'.removeBtn1'
+    $('.section_add').multifield({
+      section: '.row_check',
+      btnAdd: '.addBtn',
+      btnRemove: '.removeBtn'
+    });
+
+    $('.section_add_more').multifield({
+      section: '.row_check_new',
+      btnAdd:'.addBtn1',
+      btnRemove:'.removeBtn1'
+    });
+
   });
-  
-  });
-  Dropzone.options.myDropzone= {
+  Dropzone.options.myDropzone = {
     url: 'upload.php',
     autoProcessQueue: false,
     uploadMultiple: true,
@@ -66,39 +71,37 @@
     maxFiles: 5,
     maxFilesize: 1,
     acceptedFiles: 'image/*',
-    addRemoveLinks: true, 
-}
- 
-  $(function () {
+    addRemoveLinks: true,
+  }
+
+  $(function() {
     //Add text editor
     $('#eventdescription').summernote({
-        placeholder: 'Event description',
-        tabsize: 2,
-        height: 385,
-      })
+      placeholder: 'Event description',
+      tabsize: 2,
+      height: 385,
+    })
     $('#compose-textarea').summernote({
-        placeholder: 'Description Here',
-        tabsize: 2,
-        height: 385,
-      })
+      placeholder: 'Description Here',
+      tabsize: 2,
+      height: 385,
+    })
     $('#contentdescription').summernote({
-        placeholder: 'Content description',
-        tabsize: 2,
-        height: 255,
-      })
+      placeholder: 'Content description',
+      tabsize: 2,
+      height: 255,
+    })
 
   })
- 
- 
-   $.widget.bridge('uibutton', $.ui.button);
 
 
+  $.widget.bridge('uibutton', $.ui.button);
 </script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('asset/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- ChartJS -->
 <script src="{{asset('asset/plugins/chart.js/Chart.min.js')}}"></script>
- 
+
 <!-- jQuery Knob Chart -->
 <script src="{{asset('asset/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
 <!-- daterangepicker -->
@@ -118,13 +121,10 @@
 <!-- AdminLTE for demo purposes -->
 <!-- <script src="dist/js/demo.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
- 
 
- 
+
+
 
 </body>
+
 </html>
-
-
-
-

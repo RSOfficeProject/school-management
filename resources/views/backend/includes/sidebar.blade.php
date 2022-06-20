@@ -7,6 +7,7 @@
   </a>
   <!-- Sidebar -->
 
+  <!-- =============== Admin Start ============== -->
   <?php if (Session::get('user_group') == 1) { ?>
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
@@ -23,7 +24,6 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-
 
           <li class="nav-item menu-open">
             <a href="{{ route('backend.dashboard') }}" class="nav-link active">
@@ -175,12 +175,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="{{ route('backend.trainerguide.trainerGuide') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Trainer Guide</p>
                 </a>
-              </li>
+              </li> -->
               <li class="nav-item">
                 <a href="{{ route('backend.resources.resources') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -226,6 +226,7 @@
 
   <?php } ?>
 
+  <!-- =============== School Start ============== -->
   <?php if (Session::get('user_group') == 2) { ?>
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
@@ -258,37 +259,25 @@
               </p>
             </a>
           </li>
+
           <li class="nav-item">
-            <a href="#" class="nav-link"> 
+            <a href="{{ route('school.student-list') }}" class="nav-link">
               <i class="nav-icon fas fa-user-graduate"></i>
               <p>
                 Students
-                <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview"> 
-              <li class="nav-item">
-                <a href="students.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Students List</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="attendance.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Attendance </p>
-                </a>
-              </li>
-            </ul>
           </li>
+
           <li class="nav-item">
-            <a href="classschedule.php" class="nav-link">
+            <a href="{{ route('school.class_schedule') }}" class="nav-link">
               <i class="nav-icon fas fa-user-graduate"></i>
               <p>
                 Class Schedule
               </p>
             </a>
           </li>
+
           <li class="nav-item">
             <a href="{{ route('school.progress-report') }}" class="nav-link">
               <i class="fas fa-chart-line nav-icon"></i>
@@ -328,6 +317,177 @@
       </nav>
       <!-- /.sidebar-menu -->
     </div>
+  <?php } ?>
+
+  <!-- =============== Trainer Start ============== -->
+  <?php if (Session::get('user_group') == 3) { ?>
+    <!-- Sidebar -->
+
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mb-3 pb-3 ">
+
+        <div class=" mt-3 pb-3 d-flex">
+          <div class="image">
+            <img src="{{asset('asset/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">Trainer</a>
+          </div>
+
+        </div>
+
+
+
+        <div class="profile-info">
+          Classes
+          <span class="badge badge-info">20</span>
+        </div>
+        <div class="profile-info">
+          Students
+          <span class="badge badge-danger">320</span>
+        </div>
+        <div class="profile-info">
+          Payout
+          <span class="badge badge-warning">INR 10,000</span>
+        </div>
+      </div>
+
+
+      <!-- Sidebar Menu -->
+
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+            <a href="{{ route('trainer.dashboard') }}" class="nav-link active">
+              <i class="nav-icon ion ion-stats-bars"></i>
+              <p>
+                Dashboard
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('trainer.content/view.contentView') }}" class="nav-link">
+              <i class="nav-icon fas fa-photo-video"></i>
+              <p>
+                Content
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="classschedule.php" class="nav-link">
+              <i class="nav-icon fas fa-chalkboard-teacher"></i>
+              <p>
+                Class Schedule
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user-graduate"></i>
+              <p>
+                Students
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="students.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Students List</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="attendance.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Attendance </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="eventsllist.php" class="nav-link">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>
+                Events and Collaterals
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="todo.php" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-check"></i>
+              <p>
+                To Do
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-clock"></i>
+              <p>
+                Assignment
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="addassignment.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create Assignment </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="assignment.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Assignment View </p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="certification.php" class="nav-link">
+              <i class="nav-icon fas fa-certificate"></i>
+              <p>
+                Certification
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="termsofuseprivacypolicy.php" class="nav-link">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+                Terms & Privacy Policy
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="profile.php" class="nav-link">
+              <i class="nav-icon fas fa-address-card"></i>
+              <p>
+                Profile
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/index.php" class="nav-link ">
+              <i class="nav-icon fas fa-lock"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
   <?php } ?>
 
   <!-- /.sidebar -->

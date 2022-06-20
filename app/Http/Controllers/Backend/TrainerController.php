@@ -45,7 +45,6 @@ class TrainerController extends Controller
         $validated = $request->validate([
             'trainer_name' => 'required',
             'email' => 'required',
-            'hour' => 'required',
             'trainer_fee' => 'required',
             'contact_no' => 'required',
         ]);
@@ -55,7 +54,6 @@ class TrainerController extends Controller
 
             $module_name = $this->module_name;
             $module_name_singular = Str::singular($module_name);
-
 
             $data_array = $request->except('_token', 'roles', 'permissions', 'password_confirmation');
             $data_array['name'] = $request->trainer_name;
@@ -167,47 +165,51 @@ class TrainerController extends Controller
     }
 
     public function updateTrainer(Request $request){
-         
+        
+        // echo "<pre>"; print_r($_POST); die();
+
+
         $validated = $request->validate([
             'trainer_name' => 'required',
-            'email' => 'required',
+            'official_email_id' => 'required',
             'contact_no' => 'required',
             'address' => 'required',
             'city' => 'required',
             'address' => 'required',
             'join_date' => 'required',
-            'date_of_birth' => 'required',
             //'image' => 'required',
             'mode' => 'required',
             'type' => 'required',
             'status' => 'required',
             'no_of_hour_per_week' => 'required',
         ]);
+        // echo "<pre>"; print_r($validated); die();
 
 
-        $user= User:: where('email',$request->email)->first();
+
+        $user= User:: where('email',$request->official_email_id)->first();
 
         if(!empty($user)){
             
-            if($user['email']==$request->email && $user['id']==$request->user_id){
+            if($user['email']==$request->official_email_id && $user['id']==$request->user_id){
                 $user= User:: find($request->user_id);
                 $user->name = $request->trainer_name;
-                $user->email = $request->email;
+                $user->email = $request->official_email_id;
                 $user->save();
             }else{
                 return redirect()->back()->with('email_faild', 'Sorry Email Already Exits.');
             }
         }else{
 
-
             $user= User:: find($request->user_id);
             $user->name = $request->trainer_name;
-            $user->email = $request->email;
+            $user->email = $request->official_email_id;
+
             $user->save();
         }
 
         $user_profile= Userprofile:: where('user_id',$request->user_id)->first();
-        $user_profile->email = $request->email;
+        $user_profile->email = $request->official_email_id;
         $user_profile->name = $request->trainer_name;
         $user_profile->save();
 
@@ -237,7 +239,10 @@ class TrainerController extends Controller
         
         $trainer= trainer:: find($request->id);
         $trainer->trainer_name = $request->trainer_name;
-        $trainer->email= $request->email;
+
+        $trainer->official_email_id= $request->official_email_id;
+        $trainer->incharge_email= $request->incharge_email;
+
         $trainer->contact_no= $request->contact_no;
         $trainer->address= $request->address;
         $trainer->city= $request->city;
@@ -249,16 +254,16 @@ class TrainerController extends Controller
         $trainer->status = $request->status;
         $trainer->no_of_hour_per_week = $request->no_of_hour_per_week;
         $trainer->save();
+        // echo "<pre>"; print_r($trainer); die();
 
 
         $getTrainer = Trainer::with('user')->find($request->id)->toArray();
-        // echo "<pre>"; print_r($getTrainer); die();
 
         $user = $getTrainer['user'];
-        $email = $getTrainer['email'];
+        $email = $getTrainer['official_email_id'];
         echo $emailSub = "Trainer information updated!! <br>";
         $emailBody = "Trainer Name: ".$getTrainer['trainer_name']."<br>";
-        $emailBody .= "Your Username: ".$getTrainer['email']."<br>";
+        $emailBody .= "Your Username: ".$getTrainer['official_email_id']."<br>";
         $emailBody .= "Your Password: ". 123456 . "<br>";
         $emailBody .= "Please login your dashboard by clicking this link <a href='".url('/login')."'>click here</a> <br>";
         echo $emailBody .= 'Thanks <br> Kidspreneurship';
@@ -304,5 +309,49 @@ class TrainerController extends Controller
         $email=EmailInfo::where('group',3)->get();
         return view('backend.trainer.trainer_notification',compact('email')); 
     }
+
+    public function trainerCheckInfo(Request $request)
+    {
+        
+        $trainer = Trainer::find($request->id);
+
+        if($request->action == 'checked'){
+
+            if($request->info == 1){
+                $trainer->assessment_done = 1;
+                $result = $trainer->save();
+            }
+            if($request->info == 2){
+                $trainer->demo_video = 1;
+                $result = $trainer->save();
+            }
+            if($request->info == 3){
+                $trainer->training_hour = 1;
+                $result = $trainer->save();
+            }
+
+        }else{
+            if($request->info == 1){
+                $trainer->assessment_done = 0;
+                $result = $trainer->save();
+            }
+
+            if($request->info == 2){
+                $trainer->demo_video = 0;
+                $result = $trainer->save();
+            }
+
+            if($request->info == 3){
+                $trainer->training_hour = 0;
+                $result = $trainer->save();
+            }
+
+        }
+        
+        echo json_encode($result);
+        
+    }
+
+
 
 } 

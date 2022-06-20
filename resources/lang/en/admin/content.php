@@ -1,16 +1,17 @@
 <?php
     return [
+
         //Add and Edit Content 
         'add_content'=>'Add Content',
         'home'=>'Home',
         'age_group'=>'Select Age Group',
-        'add_agegroup'=>'+ Add AgeGroup',
+        'add_age'=>'+ Add Age',
         'select_stream'=>'Select Stream',
         'add_stream'=>'+ Add Stream',
-        'content_title'=>'Content Title',
-        'event_video'=>'Event Video',
+        'content_title'=>'Session Title',
+        'event_video'=>'Session Video',
         'worksheets'=>'Upload Worksheets',
-        'description'=>'Description',
+        'description'=>'Add Session Details',
         'submit'=>'Submit',
 
         'add_stream'=>'Add Stream',
@@ -27,10 +28,7 @@
         'list_content'=>'+ Add Content',
         'video'=>'Video',
         'title'=>'Title',
-        'description'=>'Description',
-        'age_group'=>'Age Group',
         'stream'=>'Stream',
-        'worksheets'=>'Worksheets',
         'action'=>'Action',
 
         //view content

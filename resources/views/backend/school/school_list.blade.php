@@ -65,7 +65,7 @@
                       <!-- <td> <img src="../{{$row->school_logo}}" alt="Product 1" class="img-circle img-size-32 mr-2"> </td> -->
                       <td>{{$row->school_name}}</td>
                       <td style="word-break: break-all;">
-                       {{$row->school_address}}
+                       {{$row->city}}
                       </td>
                       <td>{{$sum}}</td>
                       <td>{{$row->incharge_name}}</td>

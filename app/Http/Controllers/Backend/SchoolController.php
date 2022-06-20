@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Grade;
 use App\Models\EmailInfo;
 use App\Models\EmailNotification;
+use App\Models\ClassSchedule;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
@@ -45,6 +46,7 @@ class SchoolController extends Controller
         
         $validatedData = $req->validate([
             'school_name' => 'required',
+            'city'=>'required',
             'principle_name' => 'required',
             'country' => 'required',
             'membership_plan' => 'required',
@@ -126,14 +128,15 @@ class SchoolController extends Controller
         // $user->save();
         // $user_id=$user->id;
        
-        $data=array();
-		$data['school_name']=$req->school_name;
-        $data['principle_name']=$req->principle_name;
-        $data['country']=$req->country;
-        $data['official_email_id']=$req->email;
-        $data['contact_number']=$req->contact_number;
-        $data['membership_plan']=$req->membership_plan;
-        $data['user_id']=$user_id;
+        $school=new School();
+		$school->school_name=$req->school_name;
+        $school->city=$req->city;
+        $school->principle_name=$req->principle_name;
+        $school->country=$req->country;
+        $school->official_email_id=$req->email;
+        $school->contact_number=$req->contact_number;
+        $school->membership_plan=$req->membership_plan;
+        $school->user_id=$user_id;
 
     
         $student_grade=$req->number_of_student;
@@ -150,19 +153,24 @@ class SchoolController extends Controller
         
         
 
-        $data['number_of_student']=$new;
+        $school->number_of_student=$new;
 
        
         
-        $success= DB::table('schools')->insert($data);
+        $success=$school->save();
         
-
+        if($success)
+        {
+            $ClassSchedule=new ClassSchedule();
+            $ClassSchedule->school_id=$school->id;
+            $ClassSchedule->save();
+        }
 
         //Start Email send section-----
         $notification=EmailNotification::find(1)->toArray(); 
         
         $change=["{app_name}","{receiver_name}","{email}","{pass}"];
-        $change_to=['kidspreneurship',$data['school_name'],$req->email,"school"];
+        $change_to=['kidspreneurship',$req->school_name,$req->email,"school"];
         $email_body=str_replace($change,$change_to,$notification['mail_body']);
         
        
@@ -213,11 +221,11 @@ class SchoolController extends Controller
 
     public function schoolEdit($id)
     {
-       $school=School::find($id);
-       $grade=Grade::all();
+       $school=School::with('ClassSchedule')->find($id)->toArray();
     //    echo '<pre>';
-    //    print_r($school);
-    //    die(); 
+    //    print_r($school);die();
+       $grade=Grade::all();
+
        return view('backend.school.edit_school',compact('school','grade'));
     }
 
@@ -229,6 +237,7 @@ class SchoolController extends Controller
 
         $validatedData = $req->validate([
             'school_name' => 'required',
+            'city'=>'required',
             'address' => 'required',
             'year_establish' => 'required',
             'incharge_name' => 'required',
@@ -277,9 +286,9 @@ class SchoolController extends Controller
 
             $data['incharge_email']=$req->incharge_email;
         }
-
-    
+        
 		$data['school_name']=$req->school_name;
+        $data['city']=$req->city;
         $data['school_address']=$req->address;
         $data['year_establish']=$req->year_establish;
         $data['incharge_name']=$req->incharge_name;
@@ -287,8 +296,6 @@ class SchoolController extends Controller
         $data['contact_number']=$req->contact_number;
         $data['kidspreneurship_representative']=$req->partner_name;
         $data['course_start_date']=$req->course_start_date;
-        //$data['create_entrepreneurship']=$req->radio1;
-        //$data['weekly_class_time']=$req->weekly_class_time;
         $data['membership_plan']=$req->membership_plan;
 
         $school_logo=$req->school_logo;
@@ -374,33 +381,46 @@ class SchoolController extends Controller
                         CSV Upload End
         ==================================================*/
 
-        $student_grade=$req->number_of_student;
-        $i=1;
-        $grade='grade';
-        $all_grade=array();
-        foreach($student_grade as $grade_value)
-        {
-            $all_grade[$i]=$grade_value;
-            $i++;
-        }
+        // $student_grade=$req->number_of_student;
+        // $i=1;
+        // $grade='grade';
+        // $all_grade=array();
+        // foreach($student_grade as $grade_value)
+        // {
+        //     $all_grade[$i]=$grade_value;
+        //     $i++;
+        // }
        
-        $new=json_encode($all_grade);
-        $data['number_of_student']=$new;
-
-        $weekly_class['day']=$req->day;
-        $weekly_class['start_time']=$req->start_time;
-        $weekly_class['end_time']=$req->end_time;
-        $weekly_class['grade']=$req->grade;
-        $weekly_class['sec']=$req->sec;
-        $weekly_class['number_student']=$req->number_student_new;
-       
-        
-        $data['weekly_class_for_grade']=json_encode($weekly_class);
+        // $new=json_encode($all_grade);
+        // $data['number_of_student']=$new;
 
         // echo '<pre>';
-        // print_r($data);die();
+        // print_r($_POST);
+        // die();
+        $day=$req->day;
+        $start_time=$req->start_time;
+        $end_time=$req->end_time;
+        $grade=$req->grade;
+        $sec=$req->sec;
+        $number_student=$req->number_student_new;
+       
+        //Previous all class schedule delete by this school id---
+        ClassSchedule::where('school_id',$schhol_id)->delete();
 
-        //$school_update=School::first($schhol_id);
+        $ClassSchedule=new ClassSchedule();
+        foreach($req->day as $key=>$days)
+        {
+            ClassSchedule::create([
+                'school_id' => $schhol_id,
+                'day' => $day[$key],
+                'start_time' => $start_time[$key],
+                'end_time' => $end_time[$key],
+                'grade' => $grade[$key],
+                'section' => $sec[$key],
+                'number_of_student' => $number_student[$key]
+             ]);
+     
+        }
         $success=School::where("id",$schhol_id)->update($data);
 
         //Start Email send section-----

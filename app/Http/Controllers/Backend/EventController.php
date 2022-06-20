@@ -157,7 +157,6 @@ class EventController extends Controller
 
     public function eventupdate(Request $req)
     {
-        
         $validatedData = $req->validate([
             'event_name' => 'required',
             'event_date' => 'required',

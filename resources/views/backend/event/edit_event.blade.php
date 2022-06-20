@@ -71,7 +71,10 @@
                         </div>
                         <div class="form-group">
                            <label>{{ __('admin/event.landing_page') }}</label>
-                           <input type="text" class="form-control mb-2" placeholder="Landing Page" name="landing_page" value="{{$event->landing_page}}">
+                           <input type="text" class="form-control mb-2 @error('landing_page') is-invalid @enderror" placeholder="Landing Page" name="landing_page" value="{{$event->landing_page}}">
+                           @error('landing_page')
+                           <strong class="text-danger">{{ $message }}</strong>
+                           @enderror
                         </div>
                         <div class="form-group">
                            <label>{{ __('admin/event.event_fee') }}</label>

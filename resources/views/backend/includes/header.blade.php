@@ -36,6 +36,9 @@
   <link rel="stylesheet" href="{{asset('asset/dist/css/style.css')}}">
   <!-- jQuery -->
   <script src="{{asset('asset/plugins/jquery/jquery.min.js')}}"></script>
+
+   <script src="{{asset('asset/dist/js/countrypicker.js')}}"></script>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">

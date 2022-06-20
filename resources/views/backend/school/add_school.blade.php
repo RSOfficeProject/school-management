@@ -36,15 +36,22 @@
                     <div class="card-body">
                        <div class="form-group">
                           <label for="schoolname">{{__('admin.school_name')}}</label>
-                          <input type="text" class="form-control @error('school_name') is-invalid @enderror" id="schoolname" name="school_name" placeholder="">
+                          <input type="text" class="form-control @error('school_name') is-invalid @enderror" id="schoolname" name="school_name" placeholder="School name">
                           @error('school_name')
+                                <strong class="text-danger">{{ $message }}</strong>
+                          @enderror
+                       </div>
+                       <div class="form-group">
+                          <label for="schoolname">City</label>
+                          <input type="text" class="form-control @error('city') is-invalid @enderror" id="schoolname" name="city" placeholder="City">
+                          @error('city')
                                 <strong class="text-danger">{{ $message }}</strong>
                           @enderror
                        </div>
 
                        <div class="form-group">
-                          <label for="schoolname">Principle Name</label>
-                          <input type="text" class="form-control @error('principle_name') is-invalid @enderror" id="address" placeholder="" name="principle_name">
+                          <label for="schoolname">Principal Full Name</label>
+                          <input type="text" class="form-control @error('principle_name') is-invalid @enderror" id="address" placeholder="principle full name" name="principle_name">
                           @error('principle_name')
                                 <strong class="text-danger">{{ $message }}</strong>
                           @enderror
@@ -52,22 +59,14 @@
 
                        <div class="form-group">
                           <label for="yearestablished">official Email Id</label>
-                          <input type="email" class="form-control @error('email') is-invalid @enderror" id="yearestablished" placeholder="" min="0" name="email">
+                          <input type="email" class="form-control @error('email') is-invalid @enderror" id="yearestablished" placeholder="email" min="0" name="email">
                           @error('email')
                                 <strong class="text-danger">{{ $message }}</strong>
                           @enderror
                        </div>
-                       <!-- <div class="form-group">
-                          <label for="yearestablished">official Email Id</label>
-                          <input type="email" class="form-control @error('official_email_id') is-invalid @enderror" id="yearestablished" placeholder="" min="0" name="official_email_id">
-                          @error('official_email_id')
-                                <strong class="text-danger">{{ $message }}</strong>
-                          @enderror
-                       </div> -->
-                       
                        <div class="form-group">
                           <label for="yearestablished">Contact Number</label>
-                          <input type="number" class="form-control @error('contact_number') is-invalid @enderror" id="yearestablished" placeholder="" min="0" name="contact_number">
+                          <input type="tel" class="form-control @error('contact_number') is-invalid @enderror" id="phone" placeholder="contact number" min="0" name="contact_number">
                           @error('contact_number')
                                 <strong class="text-danger">{{ $message }}</strong>
                           @enderror
@@ -89,7 +88,7 @@
                        
                        <div class="form-group">
                           <label for="inchargename">Country</label>
-                          <input type="text" class="form-control @error('country') is-invalid @enderror" id="inchargename" name="country" placeholder="">
+                          <select id="" class="form-control selectpicker countrypicker @error('country') is-invalid @enderror" name="country" data-default="Bangladesh"></select>
                           @error('country')
                                 <strong class="text-danger">{{ $message }}</strong>
                           @enderror

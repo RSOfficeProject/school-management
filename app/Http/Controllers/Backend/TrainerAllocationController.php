@@ -9,6 +9,7 @@ use App\Models\School;
 use App\Models\TrainerAllocation;
 use App\Models\AllocationEvent;
 Use \Carbon\Carbon;
+use DB;
 
 class TrainerAllocationController extends Controller
 {
@@ -44,94 +45,102 @@ class TrainerAllocationController extends Controller
 
     public function schoolinfo(Request $req)
     {
+   
       $school_id=$req->school_id;
         if($school_id == '0')
         {
+     
           $events = [];
-          $school_row=School::all();
+          $school_row=School::with('ClassSchedule')->get()->toArray();
+          // $school_row=DB::table('Schools')->select('schools.*','class_schedule.*')
+          //  ->leftjoin('class_schedule', 'schools.id', '=', 'class_schedule.school_id')->get();
+             
           foreach($school_row as $row)
           {
-               $date=date('Y-m-d',strtotime($row->created_at));
-               $school_weekly=json_decode($row->weekly_class_for_grade,true);
-
-               for($i=0; $i<count($school_weekly['day']); $i++){
-                    if($school_weekly['day'][$i] == '1')
+               
+               $date=date('Y-m-d',strtotime($row['created_at']));
+               $school_weekly=$row['class_schedule'];
+               //echo '<pre>';print_r($school_weekly);die();
+               for($i=0; $i<count($school_weekly); $i++){
+                    if($school_weekly[$i]['day'] == '1')
                     {
                          $day='Saturday';
                     }
-                    if($school_weekly['day'][$i] == '2')
+                    if($school_weekly[$i]['day'] == '2')
                     {
                          $day='Sunday';
                     }
-                    if($school_weekly['day'][$i] == '3')
+                    if($school_weekly[$i]['day'] == '3')
                     {
                          $day='Monday';
                     }
-                    if($school_weekly['day'][$i] == '4')
+                    if($school_weekly[$i]['day'] == '4')
                     {
                          $day='Thuesday';
                     }
-                    if($school_weekly['day'][$i] == '5')
+                    if($school_weekly[$i]['day'] == '5')
                     {
                          $day='Wednesday';
                     }
-                    if($school_weekly['day'][$i] == '6')
+                    if($school_weekly[$i]['day'] == '6')
                     {
                          $day='Thursday';
                     }
-                    if($school_weekly['day'][$i] == '7')
+                    if($school_weekly[$i]['day'] == '7')
                     {
                          $day='Friday';
                     }
-                    $events[]=['title'=>$day.' ('.$school_weekly['start_time'][$i].'-'.$school_weekly['end_time'][$i].') '.'( Grade '.$school_weekly['grade'][$i].'- sec '.$school_weekly['sec'][$i].' ) | '.$school_weekly['number_student'][$i],'start'=>$date];
+                    $events[]=['title'=>$day.' ('.$school_weekly[$i]['start_time'].'-'.$school_weekly[$i]['end_time'].') '.'( Grade '.$school_weekly[$i]['grade'].'- sec '.$school_weekly[$i]['section'].' ) | '.$school_weekly[$i]['number_of_student'],'start'=>$date];
                   
                 }
               
           }
-          //echo '<pre>';print_r($events);die();
+      
         }
         else
         {
-          $school_row=School::find($school_id);
-          $date=date('Y-m-d',strtotime($school_row->created_at));
-          $school_weekly=json_decode($school_row->weekly_class_for_grade,true);
+
+          $school_row=School::with('ClassSchedule')->find($school_id)->toArray();
+          $date=date('Y-m-d',strtotime($school_row['created_at']));
+          $school_weekly=$school_row['class_schedule'];
+
           $events = [];
-          for($i=0; $i<count($school_weekly['day']); $i++){
-              if($school_weekly['day'][$i] == '1')
+          for($i=0; $i<count($school_weekly); $i++){
+              if($school_weekly[$i]['day'] == '1')
               {
                    $day='Saturday';
               }
-              if($school_weekly['day'][$i] == '2')
+              if($school_weekly[$i]['day'] == '2')
               {
                    $day='Sunday';
               }
-              if($school_weekly['day'][$i] == '3')
+              if($school_weekly[$i]['day'] == '3')
               {
                    $day='Monday';
               }
-              if($school_weekly['day'][$i] == '4')
+              if($school_weekly[$i]['day'] == '4')
               {
                    $day='Thuesday';
               }
-              if($school_weekly['day'][$i] == '5')
+              if($school_weekly[$i]['day'] == '5')
               {
                    $day='Wednesday';
               }
-              if($school_weekly['day'][$i] == '6')
+              if($school_weekly[$i]['day'] == '6')
               {
                    $day='Thursday';
               }
-              if($school_weekly['day'][$i] == '7')
+              if($school_weekly[$i]['day'] == '7')
               {
                    $day='Friday';
               }
-              $events[]=['title'=>$day.' ('.$school_weekly['start_time'][$i].'-'.$school_weekly['end_time'][$i].') '.'( Grade '.$school_weekly['grade'][$i].'- sec '.$school_weekly['sec'][$i].' ) | '.$school_weekly['number_student'][$i],'start'=>$date];
+              $events[]=['title'=>$day.' ('.$school_weekly[$i]['start_time'].'-'.$school_weekly[$i]['end_time'].') '.'( Grade '.$school_weekly[$i]['grade'].'- sec '.$school_weekly[$i]['section'].' ) | '.$school_weekly[$i]['number_of_student'],'start'=>$date];
             
           }
         }
 
   
-        ///echo '<pre>';print_r($events);die();
+        //echo '<pre>';print_r($events);die();
     
          echo json_encode($events);
     }
@@ -167,16 +176,18 @@ class TrainerAllocationController extends Controller
      $TrainerAllocation->school_id=$req->school_id;
      $TrainerAllocation->trainer_id=$req->trainer_id;
      $TrainerAllocation->class_date=$req->event_date;
-
+     
         if($req->class_schedule)
         {
           $first_explode=explode('(',$req->class_schedule);
           $secoond_explode=explode(')',$first_explode[1]);
           $third_explode=explode('-',$secoond_explode[0]);
 
+
           $hourdiff = round((strtotime($third_explode[0]) - strtotime($third_explode[1]))/3600, 1);
         }
-          
+        $TrainerAllocation->class_start=$third_explode[0];
+        $TrainerAllocation->class_end=$third_explode[1];   
         $TrainerAllocation->class_duration=abs($hourdiff);
 
         $success=$TrainerAllocation->save();
