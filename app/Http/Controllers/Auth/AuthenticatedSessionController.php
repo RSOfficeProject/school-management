@@ -85,9 +85,15 @@ class AuthenticatedSessionController extends Controller
                 }else if($get_user['group'] == 3){
                     $trainer = Trainer::where('user_id', $get_user['id'])->first()->toArray();
                     Session::put('trainer_name', $trainer['trainer_name']);
-                    echo "Trainer"; die();
+                    Session::put('user_id', $trainer['user_id']);
+                    return redirect('trainer/dashboard');
                 }else{
-                    echo "Student"; die();
+                    // echo "Student"; die();
+                    // $trainer = Students::where('user_id', $get_user['id'])->first()->toArray();
+                    // Session::put('trainer_name', $trainer['trainer_name']);
+                    // Session::put('user_id', $trainer['user_id']);
+                    return redirect('student/dashboard');
+
                 }
 
             }

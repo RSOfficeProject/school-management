@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Event;
 use App\Models\Trainer;
 use App\Models\School;
+use App\Models\Students;
 use Illuminate\Support\Facades\Mail;
 use File;
 
@@ -85,50 +86,77 @@ class EventController extends Controller
 
         //Start All Trainer Email send 
         $trainer=Trainer::all()->toArray();
-        foreach($trainer as $trainers)
+       
+        if($trainer)
         {
-            $trainer_email[]=$trainers['email'];
-            
-        }
-        //$change=["{app_name}","{receiver_name}","{action_by}"];
-        //$change_to=['kidspreneurship',$data['school_name'],"Super admin"];
-        //$email_body=str_replace($change,$change_to,$notification['mail_body']);
-        $email_body='New Event has been created';
-        file_put_contents('../resources/views/mail.blade.php',$email_body);
+            foreach($trainer as $trainers)
+            {
+                $trainer_email[]=$trainers['official_email_id'];
+                
+            }
+            //$change=["{app_name}","{receiver_name}","{action_by}"];
+            //$change_to=['kidspreneurship',$data['school_name'],"Super admin"];
+            //$email_body=str_replace($change,$change_to,$notification['mail_body']);
+            $email_body='New Event has been created';
+            file_put_contents('../resources/views/mail.blade.php',$email_body);
 
-        $emaie_data = array('subject'=>'Event created');
-      
-        $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$trainer_email){
-            $message->to($trainer_email)->subject
-               ($emaie_data['subject']);
-         });
+            $emaie_data = array('subject'=>'Event created');
+        
+            $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$trainer_email){
+                $message->to($trainer_email)->subject
+                ($emaie_data['subject']);
+            });
+        }
 
         /* End Trainer Email send */
 
 
         //Start All School Email send 
         $school_data=School::all()->toArray();
-        foreach($school_data as $school_datas)
+
+        if($school_data)
         {
-            $school_email[]=$school_datas['official_email_id'];
-            
+            foreach($school_data as $school_datas)
+            {
+                $school_email[]=$school_datas['official_email_id'];
+                
+            }
+            //$change=["{app_name}","{receiver_name}","{action_by}"];
+            //$change_to=['kidspreneurship',$data['school_name'],"Super admin"];
+            //$email_body=str_replace($change,$change_to,$notification['mail_body']);
+            $email_body='New Event has been created';
+            file_put_contents('../resources/views/mail.blade.php',$email_body);
+
+            $emaie_data = array('subject'=>'Event created');
+        
+            $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$school_email){
+                $message->to($school_email)->subject
+                ($emaie_data['subject']);
+            });
         }
-        //$change=["{app_name}","{receiver_name}","{action_by}"];
-        //$change_to=['kidspreneurship',$data['school_name'],"Super admin"];
-        //$email_body=str_replace($change,$change_to,$notification['mail_body']);
-        $email_body='New Event has been created';
-        file_put_contents('../resources/views/mail.blade.php',$email_body);
-
-        $emaie_data = array('subject'=>'Event created');
-      
-        $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$school_email){
-            $message->to($school_email)->subject
-               ($emaie_data['subject']);
-         });
-
         /* End School Email send */
 
+       /* Start All Student Email send */
+       $students=Students::with('user')->get()->toArray();
+       if($students)
+       {
+            foreach($students as $students_data)
+            {
+            $students_email[]= $students_data['user']['email'];
+                
+            }
 
+            $email_body='New Event has been created';
+            file_put_contents('../resources/views/mail.blade.php',$email_body);
+
+            $emaie_data = array('subject'=>'Event created');
+        
+            $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$students_email){
+                $message->to($students_email)->subject
+                ($emaie_data['subject']);
+            });
+       }
+    /* End Student Email send */
 
         if($success)
         {
@@ -225,48 +253,74 @@ class EventController extends Controller
         
         //Start All Trainer Email send 
         $trainer=Trainer::all()->toArray();
-        foreach($trainer as $trainers)
+        if($trainer)
         {
-            $trainer_email[]=$trainers['email'];
+            foreach($trainer as $trainers)
+            {
+                $trainer_email[]=$trainers['official_email_id'];
+                
+            }
+            //$change=["{app_name}","{receiver_name}","{action_by}"];
+            //$change_to=['kidspreneurship',$data['school_name'],"Super admin"];
+            //$email_body=str_replace($change,$change_to,$notification['mail_body']);
+            $email_body='Event has been Edited';
+            file_put_contents('../resources/views/mail.blade.php',$email_body);
+
+            $emaie_data = array('subject'=>'Event Edited');
             
-        }
-        //$change=["{app_name}","{receiver_name}","{action_by}"];
-        //$change_to=['kidspreneurship',$data['school_name'],"Super admin"];
-        //$email_body=str_replace($change,$change_to,$notification['mail_body']);
-        $email_body='Event has been Edited';
-        file_put_contents('../resources/views/mail.blade.php',$email_body);
-
-        $emaie_data = array('subject'=>'Event Edited');
-        
-        $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$trainer_email){
-            $message->to($trainer_email)->subject
-                ($emaie_data['subject']);
-        });
-
+            $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$trainer_email){
+                $message->to($trainer_email)->subject
+                    ($emaie_data['subject']);
+            });
+        }   
         /* End Trainer Email send */
        
        
         //Start All School Email send 
         $school_data=School::all()->toArray();
-        foreach($school_data as $school_datas)
-        {
-            $school_email[]=$school_datas['official_email_id'];
-            
-        }
-        //$change=["{app_name}","{receiver_name}","{action_by}"];
-        //$change_to=['kidspreneurship',$data['school_name'],"Super admin"];
-        //$email_body=str_replace($change,$change_to,$notification['mail_body']);
-        $email_body='Event has been Edited';
-        file_put_contents('../resources/views/mail.blade.php',$email_body);
 
-        $emaie_data = array('subject'=>'Event Edited');
-        
-        $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$school_email){
-            $message->to($school_email)->subject
-                ($emaie_data['subject']);
-        });
-       
+        if($school_data)
+        {
+            foreach($school_data as $school_datas)
+            {
+                $school_email[]=$school_datas['official_email_id'];
+                
+            }
+
+            $email_body='Event has been Edited';
+            file_put_contents('../resources/views/mail.blade.php',$email_body);
+
+            $emaie_data = array('subject'=>'Event Edited');
+            
+            $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$school_email){
+                $message->to($school_email)->subject
+                    ($emaie_data['subject']);
+            });
+         }
        /* End School Email send */
+
+     
+        /* Start All Student Email send */
+            $students=Students::with('user')->get()->toArray();
+            if($students)
+            {
+                foreach($students as $students_data)
+                {
+                $students_email[]= $students_data['user']['email'];
+                    
+                }
+    
+                $email_body='Event has been Edited';
+                file_put_contents('../resources/views/mail.blade.php',$email_body);
+    
+                $emaie_data = array('subject'=>'Event Edited');
+            
+                $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$students_email){
+                    $message->to($students_email)->subject
+                    ($emaie_data['subject']);
+                });
+            }
+        /* End Student Email send */
 
         if($success)
         {
@@ -310,48 +364,75 @@ class EventController extends Controller
 
         //Start All Trainer Email send 
         $trainer=Trainer::all()->toArray();
-        foreach($trainer as $trainers)
+
+        if($trainer)
         {
-            $trainer_email[]=$trainers['email'];
+            foreach($trainer as $trainers)
+            {
+                $trainer_email[]=$trainers['official_email_id'];
+                
+            }
+            //$change=["{app_name}","{receiver_name}","{action_by}"];
+            //$change_to=['kidspreneurship',$data['school_name'],"Super admin"];
+            //$email_body=str_replace($change,$change_to,$notification['mail_body']);
+            $email_body='Event has been Deleted';
+            file_put_contents('../resources/views/mail.blade.php',$email_body);
+
+            $emaie_data = array('subject'=>'Event Deleted');
             
+            $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$trainer_email){
+                $message->to($trainer_email)->subject
+                    ($emaie_data['subject']);
+            });
         }
-        //$change=["{app_name}","{receiver_name}","{action_by}"];
-        //$change_to=['kidspreneurship',$data['school_name'],"Super admin"];
-        //$email_body=str_replace($change,$change_to,$notification['mail_body']);
-        $email_body='Event has been Deleted';
-        file_put_contents('../resources/views/mail.blade.php',$email_body);
-
-        $emaie_data = array('subject'=>'Event Deleted');
-        
-        $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$trainer_email){
-            $message->to($trainer_email)->subject
-                ($emaie_data['subject']);
-        });
-
         /* End Trainer Email send */
         
         
         //Start All School Email send 
         $school_data=School::all()->toArray();
-        foreach($school_data as $school_datas)
+        if($school_data)
         {
-            $school_email[]=$school_datas['official_email_id'];
-            
-        }
-        //$change=["{app_name}","{receiver_name}","{action_by}"];
-        //$change_to=['kidspreneurship',$data['school_name'],"Super admin"];
-        //$email_body=str_replace($change,$change_to,$notification['mail_body']);
-        $email_body='Event has been Deleted';
-        file_put_contents('../resources/views/mail.blade.php',$email_body);
+            foreach($school_data as $school_datas)
+            {
+                $school_email[]=$school_datas['official_email_id'];
+                
+            }
+            //$change=["{app_name}","{receiver_name}","{action_by}"];
+            //$change_to=['kidspreneurship',$data['school_name'],"Super admin"];
+            //$email_body=str_replace($change,$change_to,$notification['mail_body']);
+            $email_body='Event has been Deleted';
+            file_put_contents('../resources/views/mail.blade.php',$email_body);
 
-        $emaie_data = array('subject'=>'Event Deleted');
-        
-        $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$school_email){
-            $message->to($school_email)->subject
-                ($emaie_data['subject']);
-        });
-        
+            $emaie_data = array('subject'=>'Event Deleted');
+            
+            $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$school_email){
+                $message->to($school_email)->subject
+                    ($emaie_data['subject']);
+            });
+        }
         /* End School Email send */
+
+        /* Start All Student Email send */
+        $students=Students::with('user')->get()->toArray();
+        if($students)
+        {
+            foreach($students as $students_data)
+            {
+            $students_email[]= $students_data['user']['email'];
+                
+            }
+
+            $email_body='Event has been Deleted';
+            file_put_contents('../resources/views/mail.blade.php',$email_body);
+
+            $emaie_data = array('subject'=>'Event Deleted');
+        
+            $send_mail=Mail::send('mail',$emaie_data,function($message) use ($emaie_data,$students_email){
+                $message->to($students_email)->subject
+                ($emaie_data['subject']);
+            });
+        }
+      /* End Student Email send */
 
         if($success)
         {

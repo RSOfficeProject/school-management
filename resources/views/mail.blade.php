@@ -1,1 +1,1 @@
-Trainer Name: Salim<br>Your Username: salimdesign@sahajjo.com<br>Your Password: 123456<br>Please login your dashboard by clicking this link <a href='http://schoolmanagement.com/login'>click here</a> <br>Thanks <br> Kidspreneurship
+Event has been Deleted

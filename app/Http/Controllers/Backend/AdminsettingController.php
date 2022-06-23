@@ -14,6 +14,58 @@ use App\Models\AdminOthers;
 
 class AdminsettingController extends Controller
 {
+    /////////////////////start
+    public function resources(){
+
+       $resource = AdminOthers::where('setting_name','teacher')->first()->toArray();
+       //print_r($resource);die();
+       return view('backend.others.resources')->with('resource',$resource);
+   }
+
+   public function getResourceValue(Request $request){
+
+        $resource = $request->resource;
+        $data['teacher']='';
+        $data['student']='';
+        $data['school']='';
+        if($resource ==1){
+            $data['teacher'] = AdminOthers::where('setting_name','teacher')->first()->toArray();
+        }else if($resource == 2){
+            $data['student'] = AdminOthers::where('setting_name','student')->first()->toArray();
+        }else if($resource == 3){
+            $data['school'] = AdminOthers::where('setting_name','school')->first()->toArray();
+        }
+        
+        echo json_encode($data);
+
+    }
+
+    public function saveResourceValue(Request $request){
+
+        $other_resource = $request->other_resource;
+        $textareaValue = $request->textareaValue;
+        
+        if($other_resource == 1){
+            $guide = AdminOthers::where('setting_name','teacher')->first();
+            $guide->setting_value = $textareaValue;
+            $guide->save();
+            echo 1;
+        }else if($other_resource == 2){
+            $guide = AdminOthers::where('setting_name','student')->first();
+            $guide->setting_value = $textareaValue;
+            $guide->save();
+            echo 2;
+        }else if($other_resource == 3){
+            $guide = AdminOthers::where('setting_name','school')->first();
+            $guide->setting_value = $textareaValue;
+            $guide->save();
+            echo 3;
+        }
+        
+    }
+
+
+
     public function trainerGuide(){
         $guide = AdminOthers::where('setting_name','trainer_guide')->first()->toArray();
         return view('backend.others.trainerguide')->with('guide',$guide);
@@ -33,10 +85,9 @@ class AdminsettingController extends Controller
         return redirect()->route('backend.trainerguide.trainerGuide')->with('success', 'Data Updated successfully.');
     
     }
-    public function resources(){
-        $resource = AdminOthers::where('setting_name','resources')->first()->toArray();
-        return view('backend.others.resources')->with('resource',$resource);
-    }
+    
+
+
     public function updateResources(Request $request){
         $validated = $request->validate([
             'resource' => 'required',
@@ -51,7 +102,8 @@ class AdminsettingController extends Controller
     }
     public function trainerTerms(){
         $trainerterm = AdminOthers::where('setting_name','trainer_terms_and_privacy_policy')->first()->toArray();
-        return view('backend.others.trainer_terms')->with('trainerterm',$trainerterm);
+        echo json_encode($trainerterm);
+        // return view('backend.others.trainer_terms')->with('trainerterm',$trainerterm);
     }
 
     public function updateTrainerTerms(Request $request){
@@ -70,7 +122,8 @@ class AdminsettingController extends Controller
 
     public function schoolTerms(){
        $schoolterm = AdminOthers::where('setting_name','school_terms_and_privacy_policy')->first()->toArray();
-        return view('backend.others.school_terms')->with('trainerterm',$schoolterm);
+       echo json_encode($schoolterm);
+        // return view('backend.others.school_terms')->with('trainerterm',$schoolterm);
     }
 
     public function updateSchoolTerms(Request $request){
@@ -89,7 +142,8 @@ class AdminsettingController extends Controller
 
     public function studentTerms(){
         $studentterm = AdminOthers::where('setting_name','student_terms_and_privacy_policy')->first()->toArray();
-         return view('backend.others.student_terms')->with('studentterm',$studentterm);
+        echo json_encode($studentterm);
+        //  return view('backend.others.student_terms')->with('studentterm',$studentterm);
      }
  
      public function updateStudentTerms(Request $request){

@@ -58,7 +58,8 @@ class TrainerController extends Controller
             $data_array = $request->except('_token', 'roles', 'permissions', 'password_confirmation');
             $data_array['name'] = $request->trainer_name;
             $data_array['password'] = Hash::make("trainer");
-    
+            $data_array['group'] = 3;
+
             if ($request->confirmed == 1) {
                 $data_array = Arr::add($data_array, 'email_verified_at', Carbon::now());
             } else {
@@ -113,7 +114,7 @@ class TrainerController extends Controller
         $trainer= new trainer;
         $trainer->user_id = $user_id;
         $trainer->trainer_name = $request->trainer_name;
-        $trainer->email= $request->email;
+        $trainer->official_email_id= $request->email;
         $trainer->hour= $request->hour;
         $trainer->trainer_fee= $request->trainer_fee;
         $trainer->contact_no= $request->contact_no;
@@ -123,13 +124,14 @@ class TrainerController extends Controller
         // echo "<pre>"; print_r($trainer); die();
 
         $user = $trainer['user'];
-        $email = $trainer['email'];
+        $email = $trainer['official_email_id'];
         echo $emailSub = "New trainer created!! <br>";
         $emailBody = "Trainer Name: ".$trainer['trainer_name']."<br>";
-        $emailBody .= "Your Username: ".$trainer['email']."<br>";
-        $emailBody .= "Your Password: ". 123456 . "<br>";
-        $emailBody .= "Please login your dashboard by clicking this link <a href='".url('/login')."'>click here</a> <br>";
+        $emailBody .= "Your Username: ".$trainer['official_email_id']."<br>";
+        $emailBody .= "Your Password: ".'trainer'. "<br>";
+        $emailBody .= "Please login your dashboard by clicking this link <a href='".url('admin/dashboard')."'>click here</a> <br>";
         echo $emailBody .= 'Thanks <br> Kidspreneurship';
+        // die();
 
         // die();
         file_put_contents('../resources/views/mail.blade.php',$emailBody);

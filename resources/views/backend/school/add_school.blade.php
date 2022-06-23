@@ -23,6 +23,18 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+
+         @if(session()->has('email_faild'))
+            <div class="alert alert-danger" style="text-align: center;">
+                  {{ session()->get('email_faild') }}
+            </div>
+         @endif
+
+         @if(Session::has('message'))
+            <div class="alert alert-success">
+                  {{ Session::get('message') }}
+            </div>
+         @endif
              
         <div class="row justify-content-center">
            <div class="col-md-6">
@@ -58,7 +70,7 @@
                        </div>
 
                        <div class="form-group">
-                          <label for="yearestablished">official Email Id</label>
+                          <label for="yearestablished">Official Email ID</label>
                           <input type="email" class="form-control @error('email') is-invalid @enderror" id="yearestablished" placeholder="email" min="0" name="email">
                           @error('email')
                                 <strong class="text-danger">{{ $message }}</strong>

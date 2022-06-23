@@ -114,12 +114,13 @@
         <div class="form-group">
           <label>{{ __('admin/content.stream_name') }}</label>
           <input type="text" class="form-control" id="gettitle">
+          <span id="stream_error" class="text-danger"></span>
         </div>
 
       </div>
       <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('admin/content.cancel') }}</button>
-        <button type="button" class="btn btn-primary" id="streamAdd" data-dismiss="modal">{{ __('admin/content.add_stream') }}</button>
+        <button type="button" class="btn btn-default">{{ __('admin/content.cancel') }}</button>
+        <button type="button" class="btn btn-primary" id="streamAdd">{{ __('admin/content.add_stream') }}</button>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -142,12 +143,14 @@
         <div class="form-group">
           <label>{{ __('admin/content.agegroup_name') }}</label>
           <input type="text" class="form-control" id="getagegroup">
+
+          <span id="group_error" class="text-danger"></span>
         </div>
 
       </div>
       <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('admin/content.cancel') }}</button>
-        <button type="button" class="btn btn-primary" id="ageGroupAdd" data-dismiss="modal">{{ __('admin/content.add_agegroup') }}</button>
+        <button type="button" class="btn btn-default">{{ __('admin/content.cancel') }}</button>
+        <button type="button" class="btn btn-primary" id="ageGroupAdd">{{ __('admin/content.add_agegroup') }}</button>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -171,13 +174,16 @@
         },
         dataType: 'json',
         success: function(data) {
-          console.log(data['id']);
-          var id = data['id'];
-          var title = data['title'];
-          var html = '<option value="' + id + '" selected>' + title + '</option>';
 
-          $("#stream_id").append(html);
-
+          if(data.error){
+            $('#stream_error').html(data.error.stream_name[0]);
+          }else{
+            var id = data['id'];
+            var title = data['title'];
+            var html = '<option value="' + id + '" selected>' + title + '</option>';
+            $("#stream_id").append(html);
+            $('#addStream').modal('hide');
+          }
 
         }
       });
@@ -199,11 +205,15 @@
         dataType: 'json',
         success: function(data) {
 
-          var id = data['id'];
-          var age = data['age'];
-          var html = '<option value="' + id + '" selected>' + age + '</option>';
-
-          $("#ageGroup_id").append(html);
+          if(data.error){
+            $('#group_error').html(data.error.agegroup_name[0]);
+          }else{
+            var id = data['id'];
+            var age = data['age'];
+            var html = '<option value="' + id + '" selected>' + age + '</option>';
+            $("#ageGroup_id").append(html);
+            $('#addAgeGroup').modal('hide');
+          }
 
 
         }

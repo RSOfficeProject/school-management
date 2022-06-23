@@ -82,7 +82,7 @@
       height: 385,
     })
     $('#compose-textarea').summernote({
-      placeholder: 'Description Here',
+      placeholder: 'techer',
       tabsize: 2,
       height: 385,
     })
@@ -90,6 +90,17 @@
       placeholder: 'Content description',
       tabsize: 2,
       height: 255,
+    })
+
+    $('#compose-textarea1').summernote({
+    placeholder: 'student',
+    tabsize: 2,
+    height: 385,
+    });
+    $('#compose-textarea2').summernote({
+      placeholder: 'school',
+      tabsize: 2,
+      height: 385,
     })
 
   })

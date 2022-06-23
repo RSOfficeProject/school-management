@@ -24,7 +24,7 @@
         'active'=>'Active',
 
         //Add School--------------
-
+        
         'add_school'=>'Add School',
         'home'=>'Home',
         'School_name'=>'School Name',

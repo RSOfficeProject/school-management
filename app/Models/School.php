@@ -13,7 +13,6 @@ class School extends Model
     protected $fillable = ['id','school_name','city','principle_name','official_email_id','number_of_student','country','school_address','year_establish','incharge_name','incharge_email','contact_number','kidspreneurship_representative','course_start_date','status','weekly _class_for_grade','membership_plan','school_logo','school_cover_image'];
 
     public function user(){
-
         return $this->belongsTo(User::class,'user_id','id');
     }
 

@@ -21,7 +21,7 @@
         'activity_emailId'=>'Activity In charge Email ID',
         'contact_no'=>'Contact Number',
         'date_of_birth'=>'Date Of Birth',
-        'official_emailId'=>'Official Email Id (principle)',
+        'official_emailId'=>'Email Address',
 
 
         'identity_proof'=>'Upload Identify Proof',
@@ -52,7 +52,7 @@
         'trainer_list'=>'Trainer List',
         'home'=>'Home',
         'add_trainer'=>'+ Add Trainer',
-        'full_name'=>'Trainer Full Name',
+        'full_name'=>'Trainer Name',
         'city'=>'City',
         'students'=>'Students',
         'hours'=> 'No. of hours',

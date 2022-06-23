@@ -50,7 +50,8 @@
                         </div>
                         <div class="form-group">
                            <label for="schoolname">{{ __('admin/trainer.trainer_address') }}</label>
-                           <textarea type="text" class="form-control" id="address" placeholder="" name="address">{{$trainer['address']}}</textarea>
+                           <textarea class="form-control" id="address" cols="30" rows="4" name="address">{{$trainer['address']}}</textarea>
+
                            @error('address')
                            <strong class="text-danger">{{ $message }}</strong>
                            @enderror
@@ -70,16 +71,16 @@
                            @enderror
                         </div>
                         <div class="form-group">
-                           <label for="official_email_id">{{ __('admin/trainer.official_emailId') }}</label>
-                           <input type="text" class="form-control" id="official_email_id" placeholder="" name="official_email_id" value="{{$trainer['official_email_id']}}">
-                           @error('official_email_id')
+                           <label for="inchargeemail">{{ __('admin/trainer.activity_emailId') }}</label>
+                           <input type="text" class="form-control" id="inchargeemail" placeholder="" name="incharge_email" value="{{$trainer['incharge_email']}}">
+                           @error('incharge_email')
                            <strong class="text-danger">{{ $message }}</strong>
                            @enderror
                         </div>
                         <div class="form-group">
-                           <label for="inchargeemail">{{ __('admin/trainer.activity_emailId') }}</label>
-                           <input type="text" class="form-control" id="inchargeemail" placeholder="" name="incharge_email" value="{{$trainer['incharge_email']}}">
-                           @error('incharge_email')
+                           <label for="official_email_id">{{ __('admin/trainer.official_emailId') }}</label>
+                           <input type="text" class="form-control" id="official_email_id" placeholder="" name="official_email_id" value="{{$trainer['official_email_id']}}">
+                           @error('official_email_id')
                            <strong class="text-danger">{{ $message }}</strong>
                            @enderror
                         </div>
@@ -217,7 +218,7 @@
 
                   </div>
                   <div class="card-footer">
-                     <button type="submit" class="btn btn-primary">{{ __('admin/trainer.submit') }}</button>
+                     <button type="submit" class="btn btn-primary mb-1">{{ __('admin/trainer.submit') }}</button>
                   </div>
 
                   </form>

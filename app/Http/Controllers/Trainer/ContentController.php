@@ -7,6 +7,7 @@ use App\Models\Setting;
 use App\Models\grade;
 use App\Models\EmailNotification;
 use App\Models\Trainer;
+use App\Models\Content; 
 use App\Models\Userprofile;
 use Illuminate\Support\Str;
 use App\Events\Backend\UserCreated;
@@ -36,8 +37,15 @@ class ContentController extends Controller
     //     $this->module_name = 'users';
     // }
 
-    public function contentView(){
-        return view('content.view');
+    public function content_list (){
+        $contents = Content:: with(['getStream','getAgeGroup'])->get()->toArray();
+        return view('trainer.content.list')->with('contents',$contents);;
+    }
+
+    public function contentView($id)
+    {
+        $content = Content:: with(['getStream','getAgeGroup'])->find($id)->toArray();
+        return view('trainer.content.view_content')->with('content',$content);
     }
     
 } 

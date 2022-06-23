@@ -9,7 +9,7 @@ use App\Models\Students;
 class ProgressreportController extends Controller
 {
     public function progressReport(){
-        $students = Students::all()->toArray();
+        $students = Students::with('user')->get()->toArray();
         // echo "<pre>"; print_r($students); die();
         
         return view('school.progres_report.list_progress', [

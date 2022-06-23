@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Trainer;
 use App\Models\School;
 use App\Models\TrainerAllocation;
@@ -191,6 +192,43 @@ class TrainerAllocationController extends Controller
         $TrainerAllocation->class_duration=abs($hourdiff);
 
         $success=$TrainerAllocation->save();
+
+        /* Email send to school and trainer */
+
+               //School Email--------------
+               $one_school=School::where('id',$req->school_id)->get('official_email_id')->toArray();
+               $school_email=$one_school['0']['official_email_id'];
+
+              
+               $email_body="New Trainer Assign";
+       
+               file_put_contents('../resources/views/mail.blade.php',$email_body);
+               $data = array('email'=>$school_email,'subject'=>"Trainer Assign");
+       
+             
+               $send_mail=Mail::send('mail', $data, function($message) use ($data){
+                   $message->to($data['email'], 'kidsinterpreneurship')->subject
+                      ($data['subject']);
+                });
+
+                
+               //Trainer Email--------------
+               $one_trainer=Trainer::where('id',$req->trainer_id)->get('official_email_id')->toArray();
+               $trainer_email=$one_trainer['0']['official_email_id'];
+    
+              
+               $email_body="New Trainer Assign";
+       
+               file_put_contents('../resources/views/mail.blade.php',$email_body);
+               $data = array('email'=>$trainer_email,'subject'=>"Trainer Assign");
+       
+             
+               $send_mail=Mail::send('mail', $data, function($message) use ($data){
+                   $message->to($data['email'], 'kidsinterpreneurship')->subject
+                      ($data['subject']);
+                });
+       
+        /* End Email Send section */
 
         $after_weekly_hour=TrainerAllocation::where('trainer_id',$req->trainer_id)->where('class_date','>=',$start)->where('class_date','<=',$end)->sum('class_duration');
 

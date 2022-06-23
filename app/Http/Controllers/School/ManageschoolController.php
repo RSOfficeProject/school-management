@@ -21,6 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 
+use File;
 use DB;
 
 class ManageschoolController extends Controller
@@ -95,11 +96,6 @@ class ManageschoolController extends Controller
         //incharge email--------------------
         $school_row = School::where('incharge_email', $req->incharge_email)->first();
 
-
-        //        echo '<pre>';
-        //    print_r($school_row);
-        //    die(); 
-
         if (!empty($school_row)) {
             if ($school_row['incharge_email'] == $req->incharge_email && $school_row['id'] == $req->school_id) {
                 $data['incharge_email'] = $req->incharge_email;
@@ -160,6 +156,8 @@ class ManageschoolController extends Controller
         ==================================================*/
         $csvUpload = $req->file('upload_csv');
         if ($csvUpload) {
+            // echo '<pre>'; echo "csv"; die();
+            
             $fileType = $csvUpload->getClientOriginalExtension();
             $fileName = 'student_' . Str::random(10) . '.' . $fileType;
             $csvUpload->move('csv/upload/', $fileName);
@@ -167,30 +165,33 @@ class ManageschoolController extends Controller
             $handle = fopen(public_path('csv/upload/' . $fileName), "r");
 
             $i = 1;
+            
+
             while ($row = fgetcsv($handle)) {
                 if ($i != 1) {
 
                     $data_array = $req->except('_token', 'roles', 'permissions', 'password_confirmation');
                     $data_array['name'] = $row[0];
                     $data_array['email'] = $row[9];
-                    $data_array['mobile'] = $row[10];
-                    $data_array['gender'] = $row[15];
-                    $data_array['date_of_brith'] = $row[13];
-
                     $data_array['group'] = 4;
                     $data_array['password'] = Hash::make("student");
+                    $data_array['date_of_birth'] = $row[13];
+                    $data_array['gender'] = $row[15];
+                    $data_array['mobile'] = $row[10];
+
+                    // echo '<pre>'; print_r($data_array); die();
             
                     if ($req->confirmed == 1) {
                         $data_array = Arr::add($data_array, 'email_verified_at', Carbon::now());
                     } else {
                         $data_array = Arr::add($data_array, 'email_verified_at', null);
                     }
-
+            
                     User::create($data_array);
-                    $userId = DB::getPdo()->lastInsertId();
+                    $user_id = DB::getPdo()->lastInsertId();
 
                     $students = new Students();
-                    $students->user_id = $userId;
+                    $students->user_id = $user_id;
                     $students->school_id = $schhol_id;
                     $students->project = $row[1];
                     $students->assignment = $row[2];
@@ -203,10 +204,53 @@ class ManageschoolController extends Controller
                     $students->address = $row[11];
                     $students->blood_group = $row[12];
                     $students->activity_incharge = $row[14];
+                    $students->grade_id = $row[16];
                     $students->save();
+
+                    // echo '<pre>'; print_r($students); die();
+
+                    $user_profile = new Userprofile();
+                    $user_profile->user_id = $user_id;
+                    $user_profile->email = $row[9];
+                    $user_profile->name = $row[0];
+                    $user_profile->save();
+
+
+
+                    //Student Account Mail
+                    
+                    $email = $row[9];
+                    echo $emailSub = "Student created!!";
+
+                    $emailBody = "Student Name: ".$row[0]."<br>";
+                    $emailBody .= "Student Username: ".$row[9]."<br>";
+                    $emailBody .= "Student Password: student <br>";
+
+                    $emailBody .= "Please login your dashboard by clicking this link <a href='".url('school/dashboard')."'>click here</a> <br>";
+                    echo $emailBody .= 'Thanks <br> Kidspreneurship';
+                    
+                    
+                    $data = array('email'=> $email,'subject'=> $emailSub);
+                    
+                    file_put_contents('../resources/views/mail.blade.php',$emailBody);
+                    
+                    Mail::send('mail', $data, function($message) use ($data){
+                        $message->to($data['email'], 'Kidspreneurship')->subject($data['subject']);
+                    });
+
+
+                    $student_email = new EmailInfo;
+                    $student_email->name = $row[0];
+                    $student_email->mail_address = $email;
+                    $student_email->mail_description = $emailBody;
+                    $student_email->group = 4;
+                    $student_email->save();
                 }
                 $i++;
             }
+            
+
+            // die();
         }
 
         /*=================================================

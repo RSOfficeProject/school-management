@@ -29,6 +29,7 @@ Route::group(['namespace' => 'Frontend', 'as' => 'frontend.'], function () {
 * --------------------------------------------------------------------
 */
 
+// =====================  Admin Section =================
 Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 'can:view_backend']], function () {
 
     /**
@@ -80,26 +81,9 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.',
     Route::get('event_insert', ['as' => "event_insert.event_insert", 'uses' => "TrainerAllocationController@event_insert"]);
 
     // Student Communication
-    Route::get("/assignment/create/", [
-        'uses' => "StudentCommunication@createAssignment",
-        'as' => "create-assignment"
-    ]);
-
-    Route::post("/assignment/save/", [
-        'uses' => "StudentCommunication@saveAssignment",
-        'as' => "save-assignment"
-    ]);
-
-    Route::post("/multi/assignment/", [
-        'uses' => "StudentCommunication@multiAssignment",
-        'as' => "multi-assignment"
-    ]);
-
-    // Route::get("/assignment/send/mail/", [
-    //     'uses' => "StudentCommunication@sendAssignmentMail",
-    //     'as' => "send-assignment-mail"
-    // ]);
-
+    Route::get("/assignment/create/", ['uses' => "StudentCommunication@createAssignment", 'as' => "create-assignment"]);
+    Route::post("/assignment/save/", ['uses' => "StudentCommunication@saveAssignment", 'as' => "save-assignment"]);
+    Route::post("/multi/assignment/", ['uses' => "StudentCommunication@multiAssignment", 'as' => "multi-assignment"]);
 
     // Content
     Route::get("addcontent", ['as' => "addcontent.addContent", 'uses' => "ContentController@addContent"]);
@@ -113,22 +97,20 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.',
     Route::post("addstream", ['as' => "addstream.addStream", 'uses' => "ContentController@addStream"]);
     Route::post("addagegroup", ['as' => "addagegroup.addAgeGroup", 'uses' => "ContentController@addAgeGroup"]);
 
-
     // Other setting of Admin
-    Route::get("trainerguide", ['as' => "trainerguide.trainerGuide", 'uses' => "AdminsettingController@trainerGuide"]);
-    Route::post("updatetrainerguide", ['as' => "updatetrainerguide.updateTrainerguide", 'uses' => "AdminsettingController@updateTrainerguide"]);
-
     Route::get("resources", ['as' => "resources.resources", 'uses' => "AdminsettingController@resources"]);
+    Route::post("get_resource_value", ['as' => "get_resource_value", 'uses' => "AdminsettingController@getResourceValue"]);
+    Route::post("save_resource_value", ['as' => "save_resource_value", 'uses' => "AdminsettingController@saveResourceValue"]);
+    
+    // Route::get("teacher", ['as' => "teacher", 'uses' => "AdminsettingController@teacher"]);
+    Route::get("trainerterms", ['as' => "trainerterms.trainerTerms", 'uses' => "AdminsettingController@trainerTerms"]);
+    Route::get("studentterms", ['as' => "studentterms.studentTerms", 'uses' => "AdminsettingController@studentTerms"]);
+    Route::get("schoolterms", ['as' => "schoolterms.schoolTerms", 'uses' => "AdminsettingController@schoolTerms"]);
+
+    // Route::post("updatetrainerguide", ['as' => "updatetrainerguide.updateTrainerguide", 'uses' => "AdminsettingController@updateTrainerguide"]);
     Route::post("updateresources", ['as' => "updateresources.updateResources", 'uses' => "AdminsettingController@updateResources"]);
 
-    Route::get("schoolterms", ['as' => "schoolterms.schoolTerms", 'uses' => "AdminsettingController@schoolTerms"]);
-    Route::post("updateschoolterms", ['as' => "updateschoolterms.updateSchoolTerms", 'uses' => "AdminsettingController@updateSchoolTerms"]);
 
-    Route::get("trainerterms", ['as' => "trainerterms.trainerTerms", 'uses' => "AdminsettingController@trainerTerms"]);
-    Route::post("updatetrainerterms", ['as' => "updatetrainerterms.updateTrainerTerms", 'uses' => "AdminsettingController@updateTrainerTerms"]);
-
-    Route::get("studentterms", ['as' => "studentterms.studentTerms", 'uses' => "AdminsettingController@studentTerms"]);
-    Route::post("updatestudentterms", ['as' => "updatestudentterms.updateStudentTerms", 'uses' => "AdminsettingController@updateStudentTerms"]);
 
     /*
      *
@@ -162,7 +144,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.',
     *
     * ---------------------------------------------------------------------
     */
-    
+
     $module_name = 'backups';
     $controller_name = 'BackupController';
     Route::get("$module_name", ['as' => "$module_name.index", 'uses' => "$controller_name@index"]);
@@ -206,6 +188,7 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'as' => 'backend.',
     Route::patch("$module_name/{id}/unblock", ['as' => "$module_name.unblock", 'uses' => "$controller_name@unblock", 'middleware' => ['permission:block_users']]);
 });
 
+// =====================  School Section =================
 Route::group(['namespace' => 'School', 'prefix' => 'school', 'as' => 'school.', 'middleware' => ['auth', 'can:view_backend']], function () {
 
     /**
@@ -232,24 +215,18 @@ Route::group(['namespace' => 'School', 'prefix' => 'school', 'as' => 'school.', 
     // Student List
     Route::get('/student/list/', ['uses' => "SchoolController@studentList", 'as' => "student-list"]);
     Route::get('/student/edit/{id}', ['uses' => "SchoolController@studentEdit", 'as' => "student-edit"]);
-    Route::post('/student/update/{id}', ['uses' => "SchoolController@studentUpdate", 'as' => "school-update"]);
+    Route::post('/student/update/', ['uses' => "SchoolController@studentUpdate", 'as' => "student-update"]);
 
     //School Class Schedule-------------- 
     Route::get('/class/schedule',['uses'=>"ClassScheduleController@class_schedule", 'as' => "class_schedule"]);
     Route::get('/school/class/schedule',['uses'=>"ClassScheduleController@school_classSchedule", 'as' => "school_classSchedule"]);
-
-
 });
 
 // =====================  Trainer Section =================
-
 Route::group(['namespace' => 'Trainer', 'prefix' => 'trainer', 'as' => 'trainer.', 'middleware' => ['auth', 'can:view_backend']], function () {
 
-    // Dashboard
+     // Dashboard
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
-
-    // Content
-    Route::get('content/view', ['as' => "content/view.contentView", 'uses' => "DashboardController@contentView"]);
 
     // Content
     Route::get('content/list', ['as' => "content/list.contentList", 'uses' => "ContentController@content_list"]);
@@ -258,5 +235,34 @@ Route::group(['namespace' => 'Trainer', 'prefix' => 'trainer', 'as' => 'trainer.
     //Event----------------------
     Route::get('event/list', ['as' => "event/list.eventList", 'uses' => "EventController@event_list"]);
     Route::get('event/view/{id}', ['as' => "event/view.eventView", 'uses' => "EventController@eventView"]);
+
+    //Trainer Class Schedule---------------
+    Route::get('class/schedule', ['as' => "class/schedule.classSchedule", 'uses' => "ClassScheduleController@classSchedule"]);
+    Route::get('trainer_classSchedule', ['as' => "trainer_classSchedule", 'uses' => "ClassScheduleController@trainer_classSchedule"]);
+
+    //Assignment-----------------------------
+    Route::get('create/assignment', ['as' => "createAssignment", 'uses' => "AssignmentController@createAssignment"]);
+    Route::post('store/assignment', ['as' => "store-assignment", 'uses' => "AssignmentController@store_assignment"]);
+    Route::get('view/assignment', ['as' => "viewAssignment", 'uses' => "AssignmentController@viewAssignment"]);
+
+    //Todo--------------------------------
+    Route::get('todo/index', ['as' => "todo_index", 'uses' => "TodoController@todo_index"]);
+    Route::post('todo/insert', ['as' => "todo_insert", 'uses' => "TodoController@todo_insert"]);
+    Route::get('todo/delete/{id}', ['as' => "todo_delete", 'uses' => "TodoController@todo_delete"]);
+    Route::get('todo/edit', ['as' => "todo_edit", 'uses' => "TodoController@todo_edit"]);
+    Route::post('todo/update', ['as' => "todo_update", 'uses' => "TodoController@todo_update"]);
+    Route::post('todo/check', ['as' => "todo_check", 'uses' => "TodoController@todo_check"]);
+
+    // Terms & Privacy Policy
+    Route::get('terms-and-privacy-policy', ['as' => "termsandprivacypolicy", 'uses' => "TermsAndPrivacyPolicyController@termsAndPrivacyPolicy"]);
+    Route::post('save-terms-and-privacy-policy', ['as' => "savetermsandprivacypolicy", 'uses' => "TermsAndPrivacyPolicyController@saveTermsAndPrivacyPolicy"]);
+
+});
+
+// =====================  Student Section =================
+Route::group(['namespace' => 'Student', 'prefix' => 'student', 'as' => 'student.', 'middleware' => ['auth', 'can:view_backend']], function () {
+
+    // Dashboard
+    Route::get('dashboard', 'StudentAccountController@index')->name('dashboard');
 
 });

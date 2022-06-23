@@ -182,8 +182,6 @@
                 var html = '<option value="'+id+'" selected>'+title+'</option>';
                 
                 $("#stream_id").append(html);
-
-
               }
           });
           

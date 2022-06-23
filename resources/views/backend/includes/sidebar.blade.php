@@ -175,34 +175,10 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <!-- <li class="nav-item">
-                <a href="{{ route('backend.trainerguide.trainerGuide') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Trainer Guide</p>
-                </a>
-              </li> -->
               <li class="nav-item">
                 <a href="{{ route('backend.resources.resources') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Other Resources </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('backend.schoolterms.schoolTerms') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>School Terms of Use & Privacy Policy </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('backend.trainerterms.trainerTerms') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Trainers Terms of Use & Privacy Policy </p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('backend.studentterms.studentTerms') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Students Terms of Use & Privacy Policy</p>
                 </a>
               </li>
             </ul>
@@ -369,8 +345,9 @@
             </a>
           </li>
 
+
           <li class="nav-item">
-            <a href="{{ route('trainer.content/view.contentView') }}" class="nav-link">
+            <a href="{{ route('trainer.content/list.contentList') }}" class="nav-link">
               <i class="nav-icon fas fa-photo-video"></i>
               <p>
                 Content
@@ -378,13 +355,14 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="classschedule.php" class="nav-link">
+            <a href="{{ route('trainer.class/schedule.classSchedule') }}" class="nav-link">
               <i class="nav-icon fas fa-chalkboard-teacher"></i>
               <p>
                 Class Schedule
               </p>
             </a>
           </li>
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user-graduate"></i>
@@ -409,7 +387,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="eventsllist.php" class="nav-link">
+            <a href="{{ route('trainer.event/list.eventList')}}" class="nav-link">
               <i class="nav-icon fas fa-calendar-alt"></i>
               <p>
                 Events and Collaterals
@@ -417,7 +395,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="todo.php" class="nav-link">
+            <a href="{{route('trainer.todo_index')}}" class="nav-link">
               <i class="nav-icon fas fa-clipboard-check"></i>
               <p>
                 To Do
@@ -435,13 +413,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="addassignment.php" class="nav-link">
+                <a href="{{route('trainer.createAssignment')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create Assignment </p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="assignment.php" class="nav-link">
+                <a href="{{route('trainer.viewAssignment')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Assignment View </p>
                 </a>
@@ -457,7 +435,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="termsofuseprivacypolicy.php" class="nav-link">
+            <a href="{{route('trainer.termsandprivacypolicy')}}" class="nav-link">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>
                 Terms & Privacy Policy
@@ -465,7 +443,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="profile.php" class="nav-link">
+            <a href="{{route('trainer.profile')}}" class="nav-link">
               <i class="nav-icon fas fa-address-card"></i>
               <p>
                 Profile
@@ -490,5 +468,119 @@
     <!-- /.sidebar -->
   <?php } ?>
 
-  <!-- /.sidebar -->
+  <!-- =============== Student Start ============== -->
+  <?php if (Session::get('user_group') == 4) { ?>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">Kabir Chowdary</a>
+        </div>
+      </div> 
+      <!-- Sidebar Menu -->
+     <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+         <li class="nav-item">
+            <a href="dashboard.php" class="nav-link active">
+              <i class="nav-icon ion ion-stats-bars"></i>
+              <p>
+                Profile
+              </p>
+            </a>
+          </li> 
+       
+          <li class="nav-item">
+            <a href="assignment.php" class="nav-link">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>
+                 Assignment 
+              </p>
+            </a> 
+          </li>
+          <li class="nav-item">
+            <a href="classschedule.php" class="nav-link">
+              <i class="nav-icon fas fa-user-graduate"></i>
+              <p>
+                   Class Schedule   
+              </p>
+            </a> 
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-lightbulb"></i>
+              <p>
+                 My Project/Ideas
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="projectlist.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>All Projects</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="addprojects.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Project</p>
+                </a>
+              </li>  
+            </ul>
+          </li> 
+
+          <li class="nav-item">
+            <a href="eventsllist.php" class="nav-link"> 
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>
+                Events
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="certification.php" class="nav-link">  
+              <i class="nav-icon fas fa-certificate"></i>
+              <p>
+                Certification
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="termsofuseprivacypolicy.php" class="nav-link"> 
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+                Terms & Privacy Policy
+              </p>
+            </a>
+          </li> 
+          
+        
+   
+          <li class="nav-item">
+            <a href="/index.php" class="nav-link "> 
+              <i class="nav-icon fas fa-lock"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
+
+         
+          
+          
+        </ul>
+      </nav>
+         
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  <?php } ?>
 </aside>

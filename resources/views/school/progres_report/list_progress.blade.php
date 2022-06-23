@@ -38,7 +38,7 @@
                             <tr>
                               <td>
                                  <a href="#"><img src="{{ asset('img/default-150x150.png') }}" alt="Product 1" class="img-circle img-size-32 mr-2">
-                                 <?= $student['name']; ?></a>
+                                 <?= $student['user']['name']; ?></a>
                               </td>
                             </tr>
                             <?php endforeach; ?>

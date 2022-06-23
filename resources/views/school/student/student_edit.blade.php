@@ -6,12 +6,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">{{__('admin.edit_school')}}</h1>
+                    <h1 class="m-0">Edit Student</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">{{__('admin.home')}}</a></li>
-                        <li class="breadcrumb-item active">{{__('admin.add_school')}}</li>
+                        <li class="breadcrumb-item active">Edit Student</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -32,13 +32,16 @@
                 <div class="col-md-6">
                     <div class="card card-primary">
 
-                        <form action="{{route('school.school-update', $student['id'])}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('school.student-update')}}" method="POST" enctype="multipart/form-data">
                             @csrf
+
+                            <input type="hidden" name="student_id" value="{{$student['id']}}">
+                            <input type="hidden" name="user_id" value="{{$student['std_user']['id']}}">
 
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="name">Student Name</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{$student['name']}}">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{$student['std_user']['name']}}">
                                     @error('name')
                                     <strong class="text-danger">{{ $message }}</strong>
                                     @enderror
@@ -48,7 +51,7 @@
                                     <label for="project">Project</label>
                                     <input type="text" class="form-control @error('project') is-invalid @enderror" id="project" name="project" placeholder="" value="{{$student['project']}}">
 
-                                    @error('student_name')
+                                    @error('project')
                                     <strong class="text-danger">{{ $message }}</strong>
                                     @enderror
                                 </div>
@@ -137,8 +140,7 @@
 
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
-                                placeholder="" value="{{$student['email']}}">
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="" value="{{$student['std_user']['email']}}">
 
                                 @error('email')
                                 <strong class="text-danger">{{ $message }}</strong>
@@ -146,19 +148,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="phone">Phone</label>
-                                <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone"
-                                placeholder="" value="{{$student['phone']}}">
+                                <label for="mobile">Phone</label>
+                                <input type="text" class="form-control @error('mobile') is-invalid @enderror" id="mobile" name="mobile" placeholder="" value="{{$student['std_user']['mobile']}}">
 
-                                @error('phone')
+                                @error('mobile')
                                 <strong class="text-danger">{{ $message }}</strong>
                                 @enderror
                             </div>
 
                             <div class="form-group">
                                 <label for="address">Address</label>
-                                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address"
-                                placeholder="" value="{{$student['address']}}">
+                                <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" placeholder="" value="{{$student['address']}}">
 
                                 @error('address')
                                 <strong class="text-danger">{{ $message }}</strong>
@@ -176,9 +176,18 @@
 
                             <div class="form-group">
                                 <label for="date_of_brith">Date Of Brith</label>
-                                <input type="text" class="form-control @error('date_of_brith') is-invalid @enderror" id="date_of_brith" name="date_of_brith" placeholder="" value="{{$student['date_of_brith']}}">
+                                <input type="text" class="form-control @error('date_of_birth') is-invalid @enderror" id="date_of_birth" name="date_of_birth" placeholder="" value="{{date('Y-m-d',strtotime($student['std_user']['date_of_birth']))}}">
 
                                 @error('date_of_brith')
+                                <strong class="text-danger">{{ $message }}</strong>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender">Gender</label>
+                                <input type="text" class="form-control @error('gender') is-invalid @enderror" id="gender" name="gender" placeholder="" value="{{$student['std_user']['gender']}}">
+
+                                @error('gender')
                                 <strong class="text-danger">{{ $message }}</strong>
                                 @enderror
                             </div>
@@ -186,7 +195,7 @@
                         </div>
                     </div>
 
-                    <div class="card mt-5">
+                    <div class="card">
                         <div class="card-body">
 
                             <div class="form-group">

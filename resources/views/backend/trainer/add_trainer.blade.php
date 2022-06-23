@@ -60,16 +60,16 @@
                         <div class="form-group">
                           <label for="inchargecontact">{{ __('admin/trainer.trainer_fee') }}</label>
                           <div class="row align-items-center">
-                            <div class="col-4">
+                            <div class="col-md-4">
                               <input type="number" class="form-control" placeholder="Hours" name="hour">
                             </div>
-                            <div class="col-4">
+                            <div class="col-md-4">
                               <select class="form-control" name="currency">
                                 <option value="1">{{ __('admin/trainer.currency_inr') }}</option>
                                 <option value="2">{{ __('admin/trainer.currency_doller') }}</option>
                               </select>
                             </div>
-                            <div class="col-4">
+                            <div class="col-md-4">
                               <input type="number" class="form-control" placeholder="Fee" name="trainer_fee">
                               @error('trainer_fee')
                                 <strong class="text-danger">{{ $message }}</strong>

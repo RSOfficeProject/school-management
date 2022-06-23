@@ -47,7 +47,7 @@
               <div class="card-body table-responsive">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
-                  <tr> 
+                  <tr>
                     <th>{{ __('admin/trainer.full_name') }}</th>
                     <th>{{ __('admin/trainer.city') }}</th>
                     <th>{{ __('admin/trainer.students') }}</th>

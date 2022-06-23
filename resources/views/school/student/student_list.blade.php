@@ -19,6 +19,12 @@
     </div>
     <!-- /.content-header -->
 
+    @if(Session::has('message'))
+      <div class="alert alert-success">
+          {{ Session::get('message') }}
+      </div>
+    @endif
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid"> 
@@ -50,8 +56,8 @@
 
                 <?php foreach($students as $student) : ?>
                 <tr>
-                    <td><?= $student['name']; ?></td>
-                    <td><?= $student['school_name']; ?></td>
+                    <td><?= $student['std_user']['name']; ?></td>
+                    <td><?= $student['school']['school_name']; ?></td>
                     <td><?= $student['overal_grade']; ?></td>
                     <td><?= $student['project']; ?></td>
                     <td> 
